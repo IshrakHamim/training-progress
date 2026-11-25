@@ -1,33 +1,38 @@
 {
- "updated": 1795633285.630077,
+ "updated": 1795895505.1815412,
  "state": "training",
  "shift": {
-  "start": 1795629300.0,
-  "end": 1795687200,
+  "start": 1795890300.0,
+  "end": 1795946400,
   "wrap_from": "15:15",
-  "number": 2
+  "number": 5
  },
  "in_shift": true,
  "cooldown": null,
  "rest": {
   "work_h": 8.0,
   "rest_min": 30.0,
-  "next_at": 1795658169.0,
-  "cycle_start": 1795629369.0,
-  "history": []
+  "next_at": 1795919131.0,
+  "cycle_start": 1795890331.0,
+  "history": [
+   [
+    1795832969.0,
+    1795834778.0
+   ]
+  ]
  },
  "estop": null,
  "job": {
-  "title": "Single-model baseline",
-  "detail": "seed 2",
-  "steps_done": 2,
+  "title": "Our system",
+  "detail": "seed 2 \u00b7 5 shards \u00b7 patience 3\"",
+  "steps_done": 0,
   "steps_total": 11,
-  "last_activity": 1795633275.5382416
+  "last_activity": null
  },
- "job_started": 1795632381.0,
+ "job_started": 1795893617.0,
  "processes": {
-  "job": "src.run_s0 --seed 2",
-  "job_started": 1795632381.0,
+  "job": "src.run_s3 --seed 2 --shards 5 --patience 3\" results/queue_done.txt; do sleep 60; done; tail -4 logs/queue_runner.log; date' < /dev/null && pwd -P >| /tmp/claude-fd95-cwd",
+  "job_started": 1795893617.0,
   "runner": true,
   "loop": true,
   "claude_working": true,
@@ -35,63 +40,93 @@
   "bridge": true
  },
  "queue": {
-  "total": 69,
-  "done": 28,
-  "failed": 0,
+  "total": 102,
+  "done": 98,
+  "failed": 2,
   "recent": [
    {
-    "title": "Our system",
-    "detail": "seed 2",
+    "title": "s0 budget",
+    "detail": "seed 2 \u00b7 budgets 1,2,3,4",
     "ok": true,
-    "at": 1795632360.0
+    "at": 1795895460.0
+   },
+   {
+    "title": "Our system",
+    "detail": "seed 1 \u00b7 5 shards \u00b7 patience 3",
+    "ok": true,
+    "at": 1795895100.0
+   },
+   {
+    "title": "s0 budget",
+    "detail": "seed 1 \u00b7 budgets 1,2,3,4",
+    "ok": true,
+    "at": 1795894500.0
+   },
+   {
+    "title": "Our system",
+    "detail": "seed 0 \u00b7 5 shards \u00b7 replay 0.5",
+    "ok": true,
+    "at": 1795894080.0
+   },
+   {
+    "title": "Our system",
+    "detail": "seed 0 \u00b7 5 shards \u00b7 patience 3",
+    "ok": true,
+    "at": 1795892700.0
+   },
+   {
+    "title": "s0 budget",
+    "detail": "seed 0 \u00b7 budgets 1,2,3,4",
+    "ok": true,
+    "at": 1795892160.0
    }
   ],
   "next": [
    {
-    "title": "Our system, stale gate",
-    "detail": "seed 1"
+    "title": "Our system",
+    "detail": "seed 0"
    },
    {
-    "title": "Our system, stale gate",
-    "detail": "seed 2"
+    "title": "Single-model baseline",
+    "detail": "seed 0"
    },
    {
-    "title": "ARCANE baseline",
-    "detail": "seed 1"
+    "title": "s0 budget",
+    "detail": "seed 0"
    }
   ]
  },
  "results": {
-  "count": 159,
+  "count": 688,
   "per_hour_24h": [
-   4,
-   8,
-   8,
-   23,
+   9,
+   14,
    16,
-   8,
+   11,
+   14,
    19,
+   11,
+   9,
    6,
-   13,
-   7,
+   6,
+   3,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
    5,
-   8,
-   6,
-   6,
-   2,
-   0,
-   0,
-   0,
-   0,
-   0,
-   0,
-   0,
-   1,
-   10
+   60
   ]
  },
  "plan": {
-  "shifts_done": 1,
+  "shifts_done": 4,
   "shifts_total": 12,
   "phases": [
    {
@@ -111,22 +146,22 @@
    {
     "name": "Phase 2",
     "label": "Systems evaluation",
-    "done": 5,
-    "partial": 11,
-    "total": 18
+    "done": 16,
+    "partial": 2,
+    "total": 19
    },
    {
     "name": "Phase 3",
     "label": "Gate B verdict",
-    "done": 0,
+    "done": 1,
     "partial": 0,
     "total": 1
    },
    {
     "name": "Phase 4",
     "label": "Paper",
-    "done": 1,
-    "partial": 1,
+    "done": 3,
+    "partial": 3,
     "total": 12
    }
   ],
@@ -136,23 +171,23 @@
   "source": "AC",
   "battery": 90,
   "battery_state": "AC attached",
-  "load": 3.1,
+  "load": 0.9,
   "cores": 15
  },
  "claude": {
   "rounds": 1,
-  "last_round_at": "23:55",
+  "last_round_at": "00:25",
   "last_sleep": null,
   "working": true,
   "usage": {
-   "probed_at": 1795632067.007618,
-   "status": "allowed",
+   "probed_at": 1795895395.887815,
+   "status": "allowed_warning",
    "five_hour": {
-    "utilization": 0.16,
-    "resetsAt": 1795635000
+    "utilization": 0.43,
+    "resetsAt": 1795905600
    },
    "seven_day": {
-    "utilization": 0.51,
+    "utilization": 0.8,
     "resetsAt": 1795932000
    }
   }
@@ -420,369 +455,666 @@
     "detail": "seed 2",
     "group": "seeds",
     "why": "Gold standard: one ResNet-20 retrained from scratch without the class. Exact by definition; it sets the time and accuracy every other system is compared with.",
-    "status": "running",
-    "minutes": null,
-    "est_min": 50
+    "status": "done",
+    "minutes": 98,
+    "est_min": null
    },
    {
     "title": "Our system, stale gate",
     "detail": "seed 1",
     "group": "seeds",
     "why": "Negative control: keeps the OLD gate, which still learned from the deleted class. Shows that accuracy checks cannot detect this; only the lineage audit can, so the gate must be retrained.",
-    "status": "queued",
-    "minutes": null,
-    "est_min": 50
+    "status": "done",
+    "minutes": 0,
+    "est_min": null
    },
    {
     "title": "Our system, stale gate",
     "detail": "seed 2",
     "group": "seeds",
     "why": "Negative control: keeps the OLD gate, which still learned from the deleted class. Shows that accuracy checks cannot detect this; only the lineage audit can, so the gate must be retrained.",
-    "status": "queued",
-    "minutes": null,
-    "est_min": 50
+    "status": "done",
+    "minutes": 1,
+    "est_min": null
    },
    {
     "title": "ARCANE baseline",
     "detail": "seed 1",
     "group": "seeds",
     "why": "ARCANE (Yan et al., IJCAI 2022), the closest prior method: one one-class model per class. A competing BASELINE we re-implemented (no official code), not a reproduction of our own paper.",
-    "status": "queued",
-    "minutes": null,
-    "est_min": 50
+    "status": "done",
+    "minutes": 9,
+    "est_min": null
    },
    {
     "title": "ARCANE baseline",
     "detail": "seed 2",
     "group": "seeds",
     "why": "ARCANE (Yan et al., IJCAI 2022), the closest prior method: one one-class model per class. A competing BASELINE we re-implemented (no official code), not a reproduction of our own paper.",
-    "status": "queued",
-    "minutes": null,
-    "est_min": 50
+    "status": "done",
+    "minutes": 8,
+    "est_min": null
    },
    {
     "title": "SISA baseline",
     "detail": "seed 1",
     "group": "seeds",
     "why": "Classic SISA (Bourtoule et al. 2021) with random sharding. Every shard holds every class, so deleting one class retrains all shards: the baseline our class-aware placement improves on.",
-    "status": "queued",
-    "minutes": null,
-    "est_min": 50
+    "status": "done",
+    "minutes": 109,
+    "est_min": null
    },
    {
     "title": "SISA baseline",
     "detail": "seed 2",
     "group": "seeds",
     "why": "Classic SISA (Bourtoule et al. 2021) with random sharding. Every shard holds every class, so deleting one class retrains all shards: the baseline our class-aware placement improves on.",
-    "status": "queued",
+    "status": "failed",
     "minutes": null,
-    "est_min": 50
+    "est_min": null
    },
    {
     "title": "Our system",
     "detail": "seed 1 \u00b7 replay 0.5",
     "group": "seeds",
     "why": "Same system with less replay data per slice: deletions get faster, accuracy drops a little. This is the main speed vs accuracy trade-off curve of the paper.",
-    "status": "queued",
-    "minutes": null,
-    "est_min": 50
+    "status": "done",
+    "minutes": 52,
+    "est_min": null
    },
    {
     "title": "Our system",
     "detail": "seed 2 \u00b7 replay 0.5",
     "group": "seeds",
     "why": "Same system with less replay data per slice: deletions get faster, accuracy drops a little. This is the main speed vs accuracy trade-off curve of the paper.",
-    "status": "queued",
-    "minutes": null,
-    "est_min": 50
+    "status": "done",
+    "minutes": 84,
+    "est_min": null
    },
    {
     "title": "Our system",
     "detail": "seed 1 \u00b7 replay 0.3",
     "group": "seeds",
     "why": "Same system with less replay data per slice: deletions get faster, accuracy drops a little. This is the main speed vs accuracy trade-off curve of the paper.",
-    "status": "queued",
-    "minutes": null,
-    "est_min": 50
+    "status": "done",
+    "minutes": 39,
+    "est_min": null
    },
    {
     "title": "Our system",
     "detail": "seed 2 \u00b7 replay 0.3",
     "group": "seeds",
     "why": "Same system with less replay data per slice: deletions get faster, accuracy drops a little. This is the main speed vs accuracy trade-off curve of the paper.",
-    "status": "queued",
-    "minutes": null,
-    "est_min": 50
+    "status": "done",
+    "minutes": 40,
+    "est_min": null
    },
    {
     "title": "Our system",
     "detail": "seed 1 \u00b7 likely-last order",
     "group": "seeds",
     "why": "Puts the classes most likely to be deleted in the LAST slices, so deleting them retrains less. Tests whether knowing the request pattern lowers the expected cost.",
-    "status": "queued",
-    "minutes": null,
-    "est_min": 50
+    "status": "done",
+    "minutes": 78,
+    "est_min": null
    },
    {
     "title": "Our system",
     "detail": "seed 2 \u00b7 likely-last order",
     "group": "seeds",
     "why": "Puts the classes most likely to be deleted in the LAST slices, so deleting them retrains less. Tests whether knowing the request pattern lowers the expected cost.",
-    "status": "queued",
-    "minutes": null,
-    "est_min": 50
+    "status": "done",
+    "minutes": 76,
+    "est_min": null
    },
    {
     "title": "Sequential deletions",
     "detail": "our system \u00b7 seed 1 \u00b7 order 0",
     "group": "seeds",
     "why": "A stream of deletion requests, one after another, in a random order: how cost and accuracy evolve as deletions pile up (our system and ARCANE run for real).",
-    "status": "queued",
-    "minutes": null,
-    "est_min": 50
+    "status": "done",
+    "minutes": 11,
+    "est_min": null
    },
    {
     "title": "Sequential deletions",
     "detail": "our system \u00b7 seed 1 \u00b7 order 1",
     "group": "seeds",
     "why": "A stream of deletion requests, one after another, in a random order: how cost and accuracy evolve as deletions pile up (our system and ARCANE run for real).",
-    "status": "queued",
-    "minutes": null,
-    "est_min": 50
+    "status": "done",
+    "minutes": 18,
+    "est_min": null
    },
    {
     "title": "Sequential deletions",
     "detail": "our system \u00b7 seed 1 \u00b7 order 2",
     "group": "seeds",
     "why": "A stream of deletion requests, one after another, in a random order: how cost and accuracy evolve as deletions pile up (our system and ARCANE run for real).",
-    "status": "queued",
-    "minutes": null,
-    "est_min": 50
+    "status": "done",
+    "minutes": 21,
+    "est_min": null
    },
    {
     "title": "Sequential deletions",
     "detail": "our system \u00b7 seed 2 \u00b7 order 0",
     "group": "seeds",
     "why": "A stream of deletion requests, one after another, in a random order: how cost and accuracy evolve as deletions pile up (our system and ARCANE run for real).",
-    "status": "queued",
-    "minutes": null,
-    "est_min": 50
+    "status": "done",
+    "minutes": 10,
+    "est_min": null
    },
    {
     "title": "Sequential deletions",
     "detail": "our system \u00b7 seed 2 \u00b7 order 1",
     "group": "seeds",
     "why": "A stream of deletion requests, one after another, in a random order: how cost and accuracy evolve as deletions pile up (our system and ARCANE run for real).",
-    "status": "queued",
-    "minutes": null,
-    "est_min": 50
+    "status": "done",
+    "minutes": 19,
+    "est_min": null
    },
    {
     "title": "Sequential deletions",
     "detail": "our system \u00b7 seed 2 \u00b7 order 2",
     "group": "seeds",
     "why": "A stream of deletion requests, one after another, in a random order: how cost and accuracy evolve as deletions pile up (our system and ARCANE run for real).",
-    "status": "queued",
-    "minutes": null,
-    "est_min": 50
+    "status": "done",
+    "minutes": 21,
+    "est_min": null
    },
    {
     "title": "Sequential deletions",
     "detail": "ARCANE \u00b7 seed 1 \u00b7 order 0",
     "group": "seeds",
     "why": "A stream of deletion requests, one after another, in a random order: how cost and accuracy evolve as deletions pile up (our system and ARCANE run for real).",
-    "status": "queued",
-    "minutes": null,
-    "est_min": 50
+    "status": "done",
+    "minutes": 0,
+    "est_min": null
    },
    {
     "title": "Sequential deletions",
     "detail": "ARCANE \u00b7 seed 1 \u00b7 order 1",
     "group": "seeds",
     "why": "A stream of deletion requests, one after another, in a random order: how cost and accuracy evolve as deletions pile up (our system and ARCANE run for real).",
-    "status": "queued",
-    "minutes": null,
-    "est_min": 50
+    "status": "done",
+    "minutes": 1,
+    "est_min": null
    },
    {
     "title": "Sequential deletions",
     "detail": "ARCANE \u00b7 seed 1 \u00b7 order 2",
     "group": "seeds",
     "why": "A stream of deletion requests, one after another, in a random order: how cost and accuracy evolve as deletions pile up (our system and ARCANE run for real).",
-    "status": "queued",
-    "minutes": null,
-    "est_min": 50
+    "status": "done",
+    "minutes": 0,
+    "est_min": null
    },
    {
     "title": "Sequential deletions",
     "detail": "ARCANE \u00b7 seed 2 \u00b7 order 0",
     "group": "seeds",
     "why": "A stream of deletion requests, one after another, in a random order: how cost and accuracy evolve as deletions pile up (our system and ARCANE run for real).",
-    "status": "queued",
-    "minutes": null,
-    "est_min": 50
+    "status": "done",
+    "minutes": 0,
+    "est_min": null
    },
    {
     "title": "Sequential deletions",
     "detail": "ARCANE \u00b7 seed 2 \u00b7 order 1",
     "group": "seeds",
     "why": "A stream of deletion requests, one after another, in a random order: how cost and accuracy evolve as deletions pile up (our system and ARCANE run for real).",
-    "status": "queued",
-    "minutes": null,
-    "est_min": 50
+    "status": "done",
+    "minutes": 1,
+    "est_min": null
    },
    {
     "title": "Sequential deletions",
     "detail": "ARCANE \u00b7 seed 2 \u00b7 order 2",
     "group": "seeds",
     "why": "A stream of deletion requests, one after another, in a random order: how cost and accuracy evolve as deletions pile up (our system and ARCANE run for real).",
-    "status": "queued",
-    "minutes": null,
-    "est_min": 50
+    "status": "done",
+    "minutes": 0,
+    "est_min": null
    },
    {
     "title": "Scratch reference",
     "detail": "seed 0 \u00b7 class 1 \u00b7 rep 0",
     "group": "verify",
     "why": "Exactness check on the GPU: two independent from-scratch builds without one class. The unlearned system must be no further from them than they are from each other (GPU noise floor).",
-    "status": "queued",
-    "minutes": null,
-    "est_min": 50
+    "status": "done",
+    "minutes": 16,
+    "est_min": null
    },
    {
     "title": "Scratch reference",
     "detail": "seed 0 \u00b7 class 2 \u00b7 rep 0",
     "group": "verify",
     "why": "Exactness check on the GPU: two independent from-scratch builds without one class. The unlearned system must be no further from them than they are from each other (GPU noise floor).",
-    "status": "queued",
-    "minutes": null,
-    "est_min": 50
+    "status": "done",
+    "minutes": 16,
+    "est_min": null
    },
    {
     "title": "Scratch reference",
     "detail": "seed 0 \u00b7 class 3 \u00b7 rep 0",
     "group": "verify",
     "why": "Exactness check on the GPU: two independent from-scratch builds without one class. The unlearned system must be no further from them than they are from each other (GPU noise floor).",
-    "status": "queued",
-    "minutes": null,
-    "est_min": 50
+    "status": "done",
+    "minutes": 17,
+    "est_min": null
    },
    {
     "title": "Scratch reference",
     "detail": "seed 0 \u00b7 class 4 \u00b7 rep 0",
     "group": "verify",
     "why": "Exactness check on the GPU: two independent from-scratch builds without one class. The unlearned system must be no further from them than they are from each other (GPU noise floor).",
-    "status": "queued",
-    "minutes": null,
-    "est_min": 50
+    "status": "done",
+    "minutes": 18,
+    "est_min": null
    },
    {
     "title": "Scratch reference",
     "detail": "seed 0 \u00b7 class 6 \u00b7 rep 0",
     "group": "verify",
     "why": "Exactness check on the GPU: two independent from-scratch builds without one class. The unlearned system must be no further from them than they are from each other (GPU noise floor).",
-    "status": "queued",
-    "minutes": null,
-    "est_min": 50
+    "status": "done",
+    "minutes": 10,
+    "est_min": null
    },
    {
     "title": "Scratch reference",
     "detail": "seed 0 \u00b7 class 7 \u00b7 rep 0",
     "group": "verify",
     "why": "Exactness check on the GPU: two independent from-scratch builds without one class. The unlearned system must be no further from them than they are from each other (GPU noise floor).",
-    "status": "queued",
-    "minutes": null,
-    "est_min": 50
+    "status": "done",
+    "minutes": 16,
+    "est_min": null
    },
    {
     "title": "Scratch reference",
     "detail": "seed 0 \u00b7 class 8 \u00b7 rep 0",
     "group": "verify",
     "why": "Exactness check on the GPU: two independent from-scratch builds without one class. The unlearned system must be no further from them than they are from each other (GPU noise floor).",
-    "status": "queued",
-    "minutes": null,
-    "est_min": 50
+    "status": "done",
+    "minutes": 15,
+    "est_min": null
    },
    {
     "title": "Scratch reference",
     "detail": "seed 0 \u00b7 class 9 \u00b7 rep 0",
     "group": "verify",
     "why": "Exactness check on the GPU: two independent from-scratch builds without one class. The unlearned system must be no further from them than they are from each other (GPU noise floor).",
-    "status": "queued",
-    "minutes": null,
-    "est_min": 50
+    "status": "done",
+    "minutes": 16,
+    "est_min": null
    },
    {
     "title": "Fine-tune baseline",
     "detail": "seed 0",
     "group": "approx",
     "why": "Approximate (NOT exact) baseline: fine-tune the full model on the remaining data. Cheap but no guarantee; gives context for cost and the privacy test.",
-    "status": "queued",
-    "minutes": null,
-    "est_min": 50
+    "status": "done",
+    "minutes": 8,
+    "est_min": null
    },
    {
     "title": "Fine-tune baseline",
     "detail": "seed 1",
     "group": "approx",
     "why": "Approximate (NOT exact) baseline: fine-tune the full model on the remaining data. Cheap but no guarantee; gives context for cost and the privacy test.",
-    "status": "queued",
-    "minutes": null,
-    "est_min": 50
+    "status": "done",
+    "minutes": 8,
+    "est_min": null
    },
    {
     "title": "Fine-tune baseline",
     "detail": "seed 2",
     "group": "approx",
     "why": "Approximate (NOT exact) baseline: fine-tune the full model on the remaining data. Cheap but no guarantee; gives context for cost and the privacy test.",
-    "status": "queued",
-    "minutes": null,
-    "est_min": 50
+    "status": "done",
+    "minutes": 8,
+    "est_min": null
    },
    {
     "title": "Our system",
     "detail": "seed 0 \u00b7 balanced placement",
     "group": "design",
     "why": "Design-space sweep: other shard counts, placements or no replay, to map the trade-off space.",
-    "status": "queued",
-    "minutes": null,
-    "est_min": 50
+    "status": "done",
+    "minutes": 68,
+    "est_min": null
    },
    {
     "title": "Our system",
     "detail": "seed 0 \u00b7 3 shards",
     "group": "design",
     "why": "Design-space sweep: other shard counts, placements or no replay, to map the trade-off space.",
-    "status": "queued",
-    "minutes": null,
-    "est_min": 50
+    "status": "done",
+    "minutes": 72,
+    "est_min": null
    },
    {
     "title": "Our system",
     "detail": "seed 0 \u00b7 5 shards",
     "group": "design",
     "why": "Design-space sweep: other shard counts, placements or no replay, to map the trade-off space.",
-    "status": "queued",
-    "minutes": null,
-    "est_min": 50
+    "status": "done",
+    "minutes": 20,
+    "est_min": null
    },
    {
     "title": "Our system",
     "detail": "seed 0 \u00b7 replay 0.0",
     "group": "design",
     "why": "Design-space sweep: other shard counts, placements or no replay, to map the trade-off space.",
-    "status": "queued",
-    "minutes": null,
-    "est_min": 50
+    "status": "done",
+    "minutes": 15,
+    "est_min": null
    },
    {
     "title": "SISA baseline",
     "detail": "seed 0 \u00b7 5 shards",
     "group": "design",
     "why": "Classic SISA (Bourtoule et al. 2021) with random sharding. Every shard holds every class, so deleting one class retrains all shards: the baseline our class-aware placement improves on.",
+    "status": "done",
+    "minutes": 109,
+    "est_min": null
+   },
+   {
+    "title": "Our system",
+    "detail": "seed 1 \u00b7 5 shards",
+    "group": "design",
+    "why": "Design-space sweep: other shard counts, placements or no replay, to map the trade-off space.",
+    "status": "done",
+    "minutes": 21,
+    "est_min": null
+   },
+   {
+    "title": "Our system",
+    "detail": "seed 2 \u00b7 5 shards",
+    "group": "design",
+    "why": "Design-space sweep: other shard counts, placements or no replay, to map the trade-off space.",
+    "status": "done",
+    "minutes": 20,
+    "est_min": null
+   },
+   {
+    "title": "Our system",
+    "detail": "seed 1 \u00b7 replay 0.0",
+    "group": "design",
+    "why": "Design-space sweep: other shard counts, placements or no replay, to map the trade-off space.",
+    "status": "done",
+    "minutes": 14,
+    "est_min": null
+   },
+   {
+    "title": "Our system",
+    "detail": "seed 2 \u00b7 replay 0.0",
+    "group": "design",
+    "why": "Design-space sweep: other shard counts, placements or no replay, to map the trade-off space.",
+    "status": "done",
+    "minutes": 14,
+    "est_min": null
+   },
+   {
+    "title": "Our system",
+    "detail": "seed 1 \u00b7 balanced placement",
+    "group": "design",
+    "why": "Design-space sweep: other shard counts, placements or no replay, to map the trade-off space.",
+    "status": "done",
+    "minutes": 100,
+    "est_min": null
+   },
+   {
+    "title": "Our system",
+    "detail": "seed 2 \u00b7 balanced placement",
+    "group": "design",
+    "why": "Design-space sweep: other shard counts, placements or no replay, to map the trade-off space.",
+    "status": "done",
+    "minutes": 65,
+    "est_min": null
+   },
+   {
+    "title": "Our system",
+    "detail": "seed 1 \u00b7 3 shards",
+    "group": "design",
+    "why": "Design-space sweep: other shard counts, placements or no replay, to map the trade-off space.",
+    "status": "done",
+    "minutes": 70,
+    "est_min": null
+   },
+   {
+    "title": "Our system",
+    "detail": "seed 2 \u00b7 3 shards",
+    "group": "design",
+    "why": "Design-space sweep: other shard counts, placements or no replay, to map the trade-off space.",
+    "status": "done",
+    "minutes": 71,
+    "est_min": null
+   },
+   {
+    "title": "SISA baseline",
+    "detail": "seed 1 \u00b7 5 shards",
+    "group": "design",
+    "why": "Classic SISA (Bourtoule et al. 2021) with random sharding. Every shard holds every class, so deleting one class retrains all shards: the baseline our class-aware placement improves on.",
+    "status": "done",
+    "minutes": 110,
+    "est_min": null
+   },
+   {
+    "title": "s0 budget",
+    "detail": "seed 0",
+    "group": "main",
+    "why": "",
+    "status": "done",
+    "minutes": 60,
+    "est_min": null
+   },
+   {
+    "title": "Single-model baseline",
+    "detail": "seed 0 \u00b7 patience 3",
+    "group": "main",
+    "why": "Gold standard: one ResNet-20 retrained from scratch without the class. Exact by definition; it sets the time and accuracy every other system is compared with.",
+    "status": "done",
+    "minutes": 38,
+    "est_min": null
+   },
+   {
+    "title": "Our system",
+    "detail": "seed 0 \u00b7 patience 3",
+    "group": "main",
+    "why": "Our system: class-aware shards with one class per slice, replay of earlier classes, and a learned gate that is retrained on every deletion. Built once, then each of the 10 classes is deleted in turn while time-to-compliance (TTC) and accuracy are measured.",
+    "status": "done",
+    "minutes": 28,
+    "est_min": null
+   },
+   {
+    "title": "s0 budget",
+    "detail": "seed 1",
+    "group": "seeds",
+    "why": "",
+    "status": "done",
+    "minutes": 58,
+    "est_min": null
+   },
+   {
+    "title": "s0 budget",
+    "detail": "seed 2",
+    "group": "seeds",
+    "why": "",
+    "status": "done",
+    "minutes": 57,
+    "est_min": null
+   },
+   {
+    "title": "Single-model baseline",
+    "detail": "seed 1 \u00b7 patience 3",
+    "group": "seeds",
+    "why": "Gold standard: one ResNet-20 retrained from scratch without the class. Exact by definition; it sets the time and accuracy every other system is compared with.",
+    "status": "done",
+    "minutes": 39,
+    "est_min": null
+   },
+   {
+    "title": "Our system",
+    "detail": "seed 1 \u00b7 patience 3",
+    "group": "seeds",
+    "why": "Our system: class-aware shards with one class per slice, replay of earlier classes, and a learned gate that is retrained on every deletion. Built once, then each of the 10 classes is deleted in turn while time-to-compliance (TTC) and accuracy are measured.",
+    "status": "done",
+    "minutes": 29,
+    "est_min": null
+   },
+   {
+    "title": "Single-model baseline",
+    "detail": "seed 2 \u00b7 patience 3",
+    "group": "seeds",
+    "why": "Gold standard: one ResNet-20 retrained from scratch without the class. Exact by definition; it sets the time and accuracy every other system is compared with.",
+    "status": "done",
+    "minutes": 38,
+    "est_min": null
+   },
+   {
+    "title": "Our system",
+    "detail": "seed 2 \u00b7 patience 3",
+    "group": "seeds",
+    "why": "Our system: class-aware shards with one class per slice, replay of earlier classes, and a learned gate that is retrained on every deletion. Built once, then each of the 10 classes is deleted in turn while time-to-compliance (TTC) and accuracy are measured.",
+    "status": "done",
+    "minutes": 62,
+    "est_min": null
+   },
+   {
+    "title": "SISA baseline",
+    "detail": "seed 2 \u00b7 5 shards",
+    "group": "design",
+    "why": "Classic SISA (Bourtoule et al. 2021) with random sharding. Every shard holds every class, so deleting one class retrains all shards: the baseline our class-aware placement improves on.",
+    "status": "failed",
+    "minutes": null,
+    "est_min": null
+   },
+   {
+    "title": "Inference benchmark",
+    "detail": "5 shards",
+    "group": "design",
+    "why": "Inference latency and throughput of every system on the M5 Pro.",
+    "status": "done",
+    "minutes": 0,
+    "est_min": null
+   },
+   {
+    "title": "s0 budget seq",
+    "detail": "seed 0",
+    "group": "main",
+    "why": "",
+    "status": "done",
+    "minutes": 39,
+    "est_min": null
+   },
+   {
+    "title": "s0 budget seq",
+    "detail": "seed 1",
+    "group": "seeds",
+    "why": "",
+    "status": "done",
+    "minutes": 38,
+    "est_min": null
+   },
+   {
+    "title": "s0 budget seq",
+    "detail": "seed 2",
+    "group": "seeds",
+    "why": "",
+    "status": "done",
+    "minutes": 24,
+    "est_min": null
+   },
+   {
+    "title": "s0 budget",
+    "detail": "seed 0 \u00b7 budgets 1,2,3,4",
+    "group": "main",
+    "why": "",
+    "status": "done",
+    "minutes": 7,
+    "est_min": null
+   },
+   {
+    "title": "Our system",
+    "detail": "seed 0 \u00b7 5 shards \u00b7 patience 3",
+    "group": "design",
+    "why": "Design-space sweep: other shard counts, placements or no replay, to map the trade-off space.",
+    "status": "done",
+    "minutes": 9,
+    "est_min": null
+   },
+   {
+    "title": "Our system",
+    "detail": "seed 0 \u00b7 5 shards \u00b7 replay 0.5",
+    "group": "design",
+    "why": "Design-space sweep: other shard counts, placements or no replay, to map the trade-off space.",
+    "status": "done",
+    "minutes": 23,
+    "est_min": null
+   },
+   {
+    "title": "s0 budget",
+    "detail": "seed 1 \u00b7 budgets 1,2,3,4",
+    "group": "seeds",
+    "why": "",
+    "status": "done",
+    "minutes": 7,
+    "est_min": null
+   },
+   {
+    "title": "Our system",
+    "detail": "seed 1 \u00b7 5 shards \u00b7 patience 3",
+    "group": "design",
+    "why": "Design-space sweep: other shard counts, placements or no replay, to map the trade-off space.",
+    "status": "done",
+    "minutes": 10,
+    "est_min": null
+   },
+   {
+    "title": "s0 budget",
+    "detail": "seed 2 \u00b7 budgets 1,2,3,4",
+    "group": "seeds",
+    "why": "",
+    "status": "done",
+    "minutes": 6,
+    "est_min": null
+   },
+   {
+    "title": "Our system",
+    "detail": "seed 2 \u00b7 5 shards \u00b7 patience 3",
+    "group": "design",
+    "why": "Design-space sweep: other shard counts, placements or no replay, to map the trade-off space.",
     "status": "queued",
     "minutes": null,
-    "est_min": 50
+    "est_min": 42
+   },
+   {
+    "title": "Our system",
+    "detail": "seed 0",
+    "group": "main",
+    "why": "Our system: class-aware shards with one class per slice, replay of earlier classes, and a learned gate that is retrained on every deletion. Built once, then each of the 10 classes is deleted in turn while time-to-compliance (TTC) and accuracy are measured.",
+    "status": "queued",
+    "minutes": null,
+    "est_min": 42
+   },
+   {
+    "title": "Single-model baseline",
+    "detail": "seed 0",
+    "group": "main",
+    "why": "Gold standard: one ResNet-20 retrained from scratch without the class. Exact by definition; it sets the time and accuracy every other system is compared with.",
+    "status": "queued",
+    "minutes": null,
+    "est_min": 53
+   },
+   {
+    "title": "s0 budget",
+    "detail": "seed 0",
+    "group": "main",
+    "why": "",
+    "status": "queued",
+    "minutes": null,
+    "est_min": 32
    }
   ],
   "groups": [
@@ -798,559 +1130,751 @@
     "id": "main",
     "name": "Main comparison, seed 0",
     "about": "Our system, its variants and every baseline, deleting each of the 10 classes.",
-    "done": 12,
-    "total": 12,
-    "eta_min": 0
+    "done": 17,
+    "total": 20,
+    "eta_min": 127
    },
    {
     "id": "verify",
     "name": "Exactness & workload checks",
     "about": "GPU noise-floor references and streams of sequential deletions.",
-    "done": 10,
+    "done": 18,
     "total": 18,
-    "eta_min": 400
+    "eta_min": 0
    },
    {
     "id": "seeds",
     "name": "Repeat with seeds 1 and 2",
     "about": "The same comparison twice more, for error bars.",
-    "done": 3,
-    "total": 28,
-    "eta_min": 1250
+    "done": 37,
+    "total": 38,
+    "eta_min": 0
    },
    {
     "id": "approx",
     "name": "Approximate baseline",
     "about": "Fine-tuning instead of retraining (not exact), for context.",
-    "done": 0,
+    "done": 3,
     "total": 3,
-    "eta_min": 150
+    "eta_min": 0
    },
    {
     "id": "design",
     "name": "Design-space sweep",
     "about": "More shards, other placements, no replay: the wider trade-off map.",
-    "done": 0,
-    "total": 5,
-    "eta_min": 250
+    "done": 18,
+    "total": 20,
+    "eta_min": 42
    }
   ],
-  "eta_min_total": 2050
+  "eta_min_total": 169
  },
  "hardware": {
   "chip": "Apple M5 Pro",
   "cores": 15,
   "ram_gb": 24,
-  "gpu_util": 65,
-  "gpu_mem_gb": 1.3,
-  "cpu_util": 7,
-  "mem_free_pct": 72,
+  "gpu_util": 66,
+  "gpu_mem_gb": 1.4,
+  "cpu_util": 6,
+  "mem_free_pct": 76,
   "thermal": 0,
   "thermal_label": "Nominal",
   "throttling": false,
   "history": [
    [
-    1795573302,
-    null,
-    7,
-    0
-   ],
-   [
-    1795573320,
-    65,
-    6,
-    0
-   ],
-   [
-    1795573450,
-    64,
-    6,
-    0
-   ],
-   [
-    1795573481,
-    65,
-    6,
-    0
-   ],
-   [
-    1795573553,
-    65,
-    5,
-    0
-   ],
-   [
-    1795574163,
-    64,
-    4,
-    0
-   ],
-   [
-    1795574775,
-    66,
-    3,
-    0
-   ],
-   [
-    1795575385,
-    65,
-    4,
-    0
-   ],
-   [
-    1795575995,
-    13,
-    1,
-    0
-   ],
-   [
-    1795576608,
-    0,
-    1,
-    0
-   ],
-   [
-    1795577218,
-    0,
-    1,
-    0
-   ],
-   [
-    1795577828,
-    77,
-    3,
-    0
-   ],
-   [
-    1795578440,
-    67,
-    3,
-    0
-   ],
-   [
-    1795579050,
-    66,
-    5,
-    0
-   ],
-   [
-    1795579660,
-    66,
-    4,
-    0
-   ],
-   [
-    1795580272,
-    66,
-    5,
-    0
-   ],
-   [
-    1795580882,
-    66,
-    4,
-    0
-   ],
-   [
-    1795581492,
-    66,
-    4,
-    0
-   ],
-   [
-    1795582105,
-    93,
-    1,
-    0
-   ],
-   [
-    1795582715,
-    67,
-    3,
-    0
-   ],
-   [
-    1795583325,
-    67,
-    4,
-    0
-   ],
-   [
-    1795583937,
-    66,
-    4,
-    0
-   ],
-   [
-    1795584547,
-    92,
-    6,
-    0
-   ],
-   [
-    1795585156,
-    66,
-    4,
-    0
-   ],
-   [
-    1795585770,
-    66,
-    4,
-    0
-   ],
-   [
-    1795586380,
-    65,
-    4,
-    0
-   ],
-   [
-    1795586990,
-    92,
-    4,
-    0
-   ],
-   [
-    1795587602,
-    94,
-    4,
-    0
-   ],
-   [
-    1795588213,
-    67,
-    4,
-    0
-   ],
-   [
-    1795588823,
-    65,
-    4,
-    0
-   ],
-   [
-    1795589435,
-    67,
-    4,
-    0
-   ],
-   [
-    1795590045,
-    67,
-    20,
-    0
-   ],
-   [
-    1795590655,
-    67,
-    3,
-    0
-   ],
-   [
-    1795591271,
-    65,
-    3,
-    0
-   ],
-   [
-    1795591881,
-    65,
-    4,
-    0
-   ],
-   [
-    1795592491,
-    64,
-    3,
-    0
-   ],
-   [
-    1795593104,
-    66,
-    3,
-    0
-   ],
-   [
-    1795593715,
-    65,
-    5,
-    0
-   ],
-   [
-    1795594325,
-    65,
-    5,
-    0
-   ],
-   [
-    1795594937,
-    64,
-    4,
-    0
-   ],
-   [
-    1795595547,
-    64,
-    3,
-    0
-   ],
-   [
-    1795596157,
-    65,
-    4,
-    0
-   ],
-   [
-    1795596769,
-    65,
-    4,
-    0
-   ],
-   [
-    1795597378,
-    66,
-    4,
-    0
-   ],
-   [
-    1795597988,
-    65,
-    14,
-    0
-   ],
-   [
-    1795598601,
-    30,
-    5,
-    0
-   ],
-   [
-    1795599210,
-    6,
-    2,
-    0
-   ],
-   [
-    1795599821,
-    6,
-    7,
-    0
-   ],
-   [
-    1795600434,
-    10,
-    6,
-    0
-   ],
-   [
-    1795601043,
-    55,
-    11,
-    0
-   ],
-   [
-    1795601654,
-    12,
-    5,
-    0
-   ],
-   [
-    1795602267,
-    43,
-    7,
-    0
-   ],
-   [
-    1795602877,
-    6,
-    1,
-    0
-   ],
-   [
-    1795603487,
-    12,
-    6,
-    0
-   ],
-   [
-    1795610225,
-    11,
-    3,
-    0
-   ],
-   [
-    1795610836,
-    7,
-    4,
-    0
-   ],
-   [
-    1795611446,
-    5,
-    5,
-    0
-   ],
-   [
-    1795612059,
-    4,
-    3,
-    0
-   ],
-   [
-    1795612669,
-    3,
-    5,
-    0
-   ],
-   [
-    1795613279,
-    3,
-    4,
-    0
-   ],
-   [
-    1795617496,
-    48,
-    9,
-    0
-   ],
-   [
-    1795618106,
-    55,
-    7,
-    0
-   ],
-   [
-    1795618716,
+    1795809720,
+    62,
     18,
-    2,
     0
    ],
    [
-    1795619329,
-    10,
-    1,
+    1795810330,
+    62,
+    18,
     0
    ],
    [
-    1795619939,
+    1795810539,
+    61,
+    17,
+    0
+   ],
+   [
+    1795810943,
+    61,
+    16,
+    0
+   ],
+   [
+    1795811552,
+    62,
+    18,
+    0
+   ],
+   [
+    1795812161,
+    62,
+    18,
+    0
+   ],
+   [
+    1795812773,
+    61,
+    18,
+    0
+   ],
+   [
+    1795813383,
+    62,
+    16,
+    0
+   ],
+   [
+    1795813992,
+    61,
+    16,
+    0
+   ],
+   [
+    1795814135,
+    62,
+    21,
+    0
+   ],
+   [
+    1795814605,
+    61,
+    19,
+    0
+   ],
+   [
+    1795815214,
+    59,
+    12,
+    0
+   ],
+   [
+    1795815824,
+    61,
+    16,
+    0
+   ],
+   [
+    1795816409,
+    60,
+    17,
+    0
+   ],
+   [
+    1795816433,
+    61,
+    15,
+    0
+   ],
+   [
+    1795817043,
+    61,
+    15,
+    0
+   ],
+   [
+    1795817653,
+    61,
     14,
-    6,
     0
    ],
    [
-    1795620693,
+    1795818114,
+    65,
+    12,
+    0
+   ],
+   [
+    1795818265,
+    61,
+    14,
+    0
+   ],
+   [
+    1795818875,
+    59,
+    14,
+    0
+   ],
+   [
+    1795819484,
+    63,
+    14,
+    0
+   ],
+   [
+    1795820096,
+    59,
+    13,
+    0
+   ],
+   [
+    1795820706,
+    60,
+    15,
+    0
+   ],
+   [
+    1795821316,
+    61,
+    14,
+    0
+   ],
+   [
+    1795821682,
+    61,
+    17,
+    0
+   ],
+   [
+    1795821928,
+    60,
+    14,
+    0
+   ],
+   [
+    1795822537,
+    61,
+    15,
+    0
+   ],
+   [
+    1795823147,
+    59,
+    13,
+    0
+   ],
+   [
+    1795823759,
+    59,
+    16,
+    0
+   ],
+   [
+    1795824369,
+    61,
+    14,
+    0
+   ],
+   [
+    1795824978,
+    64,
+    13,
+    0
+   ],
+   [
+    1795825138,
+    61,
+    14,
+    0
+   ],
+   [
+    1795825591,
+    60,
+    14,
+    0
+   ],
+   [
+    1795826201,
+    60,
+    15,
+    0
+   ],
+   [
+    1795826810,
+    59,
+    18,
+    0
+   ],
+   [
+    1795827422,
+    59,
+    15,
+    0
+   ],
+   [
+    1795827443,
+    61,
+    17,
+    0
+   ],
+   [
+    1795828032,
+    60,
+    16,
+    0
+   ],
+   [
+    1795828641,
+    80,
+    13,
+    0
+   ],
+   [
+    1795829221,
+    63,
+    18,
+    0
+   ],
+   [
+    1795829254,
+    61,
+    14,
+    0
+   ],
+   [
+    1795829863,
+    59,
+    14,
+    0
+   ],
+   [
+    1795830473,
+    67,
+    14,
+    0
+   ],
+   [
+    1795831085,
+    59,
+    15,
+    0
+   ],
+   [
+    1795831495,
+    60,
+    17,
+    0
+   ],
+   [
+    1795831695,
+    60,
+    15,
+    0
+   ],
+   [
+    1795832304,
+    61,
+    15,
+    0
+   ],
+   [
+    1795832916,
+    61,
+    16,
+    0
+   ],
+   [
+    1795832981,
+    15,
     11,
-    5,
     0
    ],
    [
-    1795621306,
-    6,
-    3,
+    1795833526,
+    0,
+    11,
     0
    ],
    [
-    1795621916,
-    5,
+    1795834135,
+    0,
+    12,
+    0
+   ],
+   [
+    1795834747,
+    0,
     10,
     0
    ],
    [
-    1795628409,
-    6,
+    1795834784,
+    59,
+    15,
+    0
+   ],
+   [
+    1795835210,
+    64,
+    15,
+    0
+   ],
+   [
+    1795835357,
+    60,
+    27,
+    0
+   ],
+   [
+    1795835966,
+    62,
+    14,
+    0
+   ],
+   [
+    1795836578,
+    62,
+    14,
+    0
+   ],
+   [
+    1795837188,
+    62,
+    13,
+    0
+   ],
+   [
+    1795837798,
+    62,
+    15,
+    0
+   ],
+   [
+    1795838410,
+    61,
+    15,
+    0
+   ],
+   [
+    1795839019,
+    61,
+    17,
+    0
+   ],
+   [
+    1795839629,
+    61,
+    12,
+    0
+   ],
+   [
+    1795840241,
+    62,
+    12,
+    0
+   ],
+   [
+    1795840851,
+    61,
+    13,
+    0
+   ],
+   [
+    1795841460,
+    61,
+    12,
+    0
+   ],
+   [
+    1795841899,
+    90,
+    17,
+    0
+   ],
+   [
+    1795842073,
+    60,
+    15,
+    0
+   ],
+   [
+    1795842682,
+    59,
+    16,
+    0
+   ],
+   [
+    1795843291,
+    60,
+    15,
+    0
+   ],
+   [
+    1795843904,
+    59,
+    14,
+    0
+   ],
+   [
+    1795844247,
+    60,
+    13,
+    0
+   ],
+   [
+    1795844513,
+    60,
+    17,
+    0
+   ],
+   [
+    1795845123,
+    61,
+    15,
+    0
+   ],
+   [
+    1795845735,
+    60,
+    13,
+    0
+   ],
+   [
+    1795846345,
+    59,
+    17,
+    0
+   ],
+   [
+    1795846570,
+    59,
+    18,
+    0
+   ],
+   [
+    1795846954,
+    59,
+    15,
+    0
+   ],
+   [
+    1795847566,
+    60,
+    12,
+    0
+   ],
+   [
+    1795847843,
     35,
+    17,
     0
    ],
    [
-    1795628896,
-    1,
-    5,
+    1795848176,
+    6,
+    13,
     0
    ],
    [
-    1795629020,
+    1795848785,
     9,
-    11,
+    12,
     0
    ],
    [
-    1795629095,
-    1,
+    1795849397,
+    7,
+    15,
+    0
+   ],
+   [
+    1795850007,
+    6,
     20,
     0
    ],
    [
-    1795629253,
+    1795850616,
+    4,
+    11,
+    0
+   ],
+   [
+    1795851229,
+    34,
+    19,
+    0
+   ],
+   [
+    1795851838,
+    28,
+    19,
+    0
+   ],
+   [
+    1795852448,
+    20,
+    19,
+    0
+   ],
+   [
+    1795853060,
+    22,
+    24,
+    0
+   ],
+   [
+    1795853670,
+    26,
+    24,
+    0
+   ],
+   [
+    1795854280,
+    4,
+    11,
+    0
+   ],
+   [
+    1795854894,
+    9,
+    12,
+    0
+   ],
+   [
+    1795855824,
     2,
+    14,
+    0
+   ],
+   [
+    1795869630,
+    14,
+    1,
+    0
+   ],
+   [
+    1795887925,
+    16,
+    8,
+    0
+   ],
+   [
+    1795887946,
+    5,
+    8,
+    0
+   ],
+   [
+    1795888118,
+    34,
+    7,
+    0
+   ],
+   [
+    1795888535,
+    3,
+    2,
+    0
+   ],
+   [
+    1795889145,
+    1,
     4,
     0
    ],
    [
-    1795629259,
-    0,
+    1795889758,
+    8,
     2,
     0
    ],
    [
-    1795629323,
-    6,
-    6,
+    1795890321,
+    25,
+    9,
     0
    ],
    [
-    1795629349,
-    1,
+    1795890518,
+    66,
+    4,
+    0
+   ],
+   [
+    1795891127,
+    65,
     5,
     0
    ],
    [
-    1795629629,
-    67,
+    1795891740,
+    66,
+    5,
+    0
+   ],
+   [
+    1795891797,
+    65,
+    13,
+    0
+   ],
+   [
+    1795892172,
+    66,
+    8,
+    0
+   ],
+   [
+    1795892349,
+    66,
+    5,
+    0
+   ],
+   [
+    1795892729,
+    77,
+    15,
+    0
+   ],
+   [
+    1795892959,
+    65,
     6,
     0
    ],
    [
-    1795630242,
-    66,
-    10,
+    1795893571,
+    90,
+    19,
     0
    ],
    [
-    1795630851,
-    66,
-    15,
+    1795894149,
+    90,
+    17,
     0
    ],
    [
-    1795631461,
-    61,
+    1795894180,
+    90,
+    16,
+    0
+   ],
+   [
+    1795894563,
+    52,
+    8,
+    0
+   ],
+   [
+    1795894790,
+    93,
     11,
     0
    ],
    [
-    1795632074,
-    92,
-    11,
-    0
-   ],
-   [
-    1795632398,
-    70,
-    15,
-    0
-   ],
-   [
-    1795632683,
-    66,
-    11,
-    0
-   ],
-   [
-    1795633293,
-    65,
+    1795895137,
+    73,
     7,
+    0
+   ],
+   [
+    1795895403,
+    69,
+    4,
+    0
+   ],
+   [
+    1795895512,
+    66,
+    6,
     0
    ]
   ]
