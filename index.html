@@ -143,7 +143,85 @@ details[open] .chev{transform:rotate(90deg)}
 .tabbar button svg{width:26px;height:26px}
 .tabbar button.on{color:var(--blue)}
 .foot{color:var(--text3);font-size:12px;text-align:center;margin-top:24px;line-height:1.5}
-@media (max-width:360px){.rings{gap:12px}.lg .v{font-size:18px}.tile .v{font-size:24px}}
+/* ---------- motion ---------- */
+.hero{position:relative;isolation:isolate}
+.hero::before{content:"";position:absolute;inset:-40%;z-index:-1;pointer-events:none;opacity:.55;
+  background:radial-gradient(40% 40% at 30% 30%,color-mix(in srgb,var(--hc,transparent) 22%,transparent),transparent 70%),
+             radial-gradient(35% 35% at 75% 70%,color-mix(in srgb,var(--hc,transparent) 14%,transparent),transparent 70%);
+  animation:drift 14s ease-in-out infinite alternate}
+@keyframes drift{from{transform:translate(-4%,-3%) rotate(0)}to{transform:translate(5%,4%) rotate(25deg)}}
+.viz{position:absolute;top:12px;right:12px;width:116px;height:52px;pointer-events:none}
+.viz svg{width:100%;height:100%;overflow:visible}
+.wave{animation:wave 2.4s linear infinite}
+.wave.b{animation-duration:3.6s;opacity:.4}
+@keyframes wave{from{transform:translateX(0)}to{transform:translateX(-40px)}}
+.pill.anim i{animation:blink 1.6s ease-in-out infinite}
+@keyframes blink{50%{transform:scale(1.5);opacity:.55}}
+.bar.go>b{background-image:linear-gradient(-45deg,rgba(255,255,255,.28) 25%,transparent 25%,transparent 50%,rgba(255,255,255,.28) 50%,rgba(255,255,255,.28) 75%,transparent 75%);
+  background-size:16px 16px;animation:stripes .9s linear infinite}
+@keyframes stripes{to{background-position:16px 0}}
+.bar.go{position:relative}
+.bar.go>b{position:relative;overflow:hidden}
+.bar.go>b::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.55),transparent);
+  transform:translateX(-100%);animation:sheen 2.6s ease-in-out infinite}
+@keyframes sheen{60%,100%{transform:translateX(100%)}}
+.ic.spin{position:relative}
+.ic.spin::after{content:"";position:absolute;inset:-3px;border-radius:9px;border:2px solid transparent;border-top-color:var(--c);border-right-color:var(--c);animation:spin 1.2s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.intro .ringfill{animation:ringin 1.3s cubic-bezier(.2,.8,.2,1) both}
+@keyframes ringin{from{stroke-dasharray:0 400}}
+.intro .bar>b,.intro .tl>b{animation:barin 1.1s cubic-bezier(.2,.8,.2,1) both}
+@keyframes barin{from{width:0}}
+.view.on>*{animation:rise .45s cubic-bezier(.2,.8,.2,1) both}
+.view.on>*:nth-child(2){animation-delay:.04s}.view.on>*:nth-child(3){animation-delay:.08s}.view.on>*:nth-child(4){animation-delay:.12s}
+.view.on>*:nth-child(5){animation-delay:.16s}.view.on>*:nth-child(6){animation-delay:.2s}.view.on>*:nth-child(n+7){animation-delay:.24s}
+@keyframes rise{from{opacity:0;transform:translateY(10px)}}
+/* resting */
+.restviz{display:flex;align-items:center;gap:18px;margin-top:14px}
+.moon{position:relative;width:96px;height:96px;flex:none}
+.moon svg{width:96px;height:96px}
+.moon .core{animation:breathe 5s ease-in-out infinite;transform-origin:48px 48px}
+@keyframes breathe{50%{transform:scale(1.08);opacity:.85}}
+.moon .z{position:absolute;font-weight:700;color:var(--teal);opacity:0;animation:zz 4.5s ease-in infinite}
+.moon .z:nth-of-type(1){right:-2px;top:8px;font-size:13px}
+.moon .z:nth-of-type(2){right:-12px;top:-4px;font-size:17px;animation-delay:1.5s}
+.moon .z:nth-of-type(3){right:-24px;top:-16px;font-size:21px;animation-delay:3s}
+@keyframes zz{0%{opacity:0;transform:translate(0,8px)}25%{opacity:1}100%{opacity:0;transform:translate(10px,-14px)}}
+.big{font-size:34px;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:.3px}
+/* cycle card */
+.cyc{display:flex;align-items:center;gap:14px;padding:14px 16px}
+.cyc svg{flex:none}
+.tl em.rest{background:var(--teal)}
+.tl em.plan{background:repeating-linear-gradient(90deg,var(--teal) 0 3px,transparent 3px 6px);opacity:.75}
+.tl i.nowmark{position:absolute;top:-1px;bottom:-1px;width:2px;background:var(--text);border-radius:1px;opacity:.6}
+/* controls */
+.ctl{padding:14px 16px}
+.ctl+.ctl{border-top:.5px solid var(--sep)}
+.ctl .t{font-weight:600}
+.ctl .d{font-size:14px;color:var(--text2);margin-top:3px;line-height:1.4}
+.ctl code{font:13px ui-monospace,SFMono-Regular,Menlo,monospace;background:var(--fill);padding:2px 6px;border-radius:5px;word-break:break-all}
+.btns{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.btn{border:0;border-radius:10px;padding:9px 14px;font:inherit;font-size:15px;font-weight:600;cursor:pointer;
+  background:color-mix(in srgb,var(--blue) 14%,transparent);color:var(--blue);text-decoration:none;display:inline-block}
+.estop{position:relative;overflow:hidden;width:100%;margin-top:12px;border:0;border-radius:14px;padding:16px;cursor:pointer;
+  font:inherit;font-size:17px;font-weight:700;color:#fff;background:var(--red);touch-action:none;user-select:none;-webkit-user-select:none;
+  box-shadow:0 6px 18px color-mix(in srgb,var(--red) 35%,transparent);transition:transform .15s}
+.estop:active{transform:scale(.98)}
+.estop:disabled{background:var(--fill);color:var(--text3);box-shadow:none;cursor:default}
+.estop .fill{position:absolute;inset:0;background:rgba(0,0,0,.28);transform-origin:left;transform:scaleX(0)}
+.estop.holding .fill{transform:scaleX(1);transition:transform 2s linear}
+.estop span{position:relative}
+.estop.armed:not(:disabled){animation:throb 2.4s ease-in-out infinite}
+@keyframes throb{50%{box-shadow:0 6px 26px color-mix(in srgb,var(--red) 60%,transparent)}}
+.toast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom) + 76px);transform:translate(-50%,30px);opacity:0;z-index:20;
+  background:var(--card);color:var(--text);border-radius:14px;padding:12px 16px;font-size:15px;max-width:min(92vw,420px);
+  box-shadow:0 10px 30px rgba(0,0,0,.25);transition:all .4s cubic-bezier(.2,.8,.2,1);pointer-events:none}
+.toast.on{transform:translate(-50%,0);opacity:1}
+#confetti{position:fixed;inset:0;pointer-events:none;z-index:19}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation:none !important;transition:none !important}
+}
+@media (max-width:360px){.rings{gap:12px}.lg .v{font-size:18px}.tile .v{font-size:24px}.viz{display:none}}
 </style>
 </head>
 <body>
@@ -156,6 +234,8 @@ details[open] .chev{transform:rotate(90deg)}
   <!-- NOW -->
   <section class="view on" id="v-now">
     <div class="card hero" id="hero"></div>
+    <div class="hdr">Work &amp; rest cycle</div>
+    <div class="card" id="cycle"></div>
     <div class="hdr">Overview</div>
     <div class="card rings" id="rings"></div>
     <div class="hdr">Claude usage</div>
@@ -166,6 +246,9 @@ details[open] .chev{transform:rotate(90deg)}
     <div class="card" id="next"></div>
     <div class="hdr">Recently finished</div>
     <div class="card" id="recent"></div>
+    <div class="hdr">Controls</div>
+    <div class="card" id="controls"></div>
+    <div class="foot-note" id="ctlnote"></div>
   </section>
 
   <!-- EXPERIMENTS -->
@@ -205,6 +288,8 @@ details[open] .chev{transform:rotate(90deg)}
   <div class="foot" id="foot">Updates every 10 minutes while the Mac is awake.</div>
 </div>
 
+<canvas id="confetti"></canvas>
+<div class="toast" id="toast"></div>
 <nav class="tabbar" id="tabs">
   <button data-v="now" class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>Now</button>
   <button data-v="exp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6M10 3v6l-5 9a2 2 0 001.8 3h10.4a2 2 0 001.8-3l-5-9V3"/><path d="M7.5 15h9"/></svg>Experiments</button>
@@ -238,7 +323,22 @@ const STATES = {
   queue_empty:{label:"Queue finished",    c:"var(--indigo)"},
   stopped:    {label:"GPU queue stopped", c:"var(--red)"},
   off:        {label:"Off shift",         c:"var(--gray)"},
+  estopped:   {label:"Emergency stopped", c:"var(--red)"},
 };
+// continuous CSS animations across re-renders: start each one at the current phase of its cycle
+const ph = sec => `animation-delay:-${((performance.now() / 1000) % sec).toFixed(2)}s`;
+const WAVE = () => `<svg viewBox="0 0 116 52"><defs><linearGradient id="wg" x1="0" x2="1"><stop offset="0" stop-color="var(--green)" stop-opacity="0"/><stop offset=".35" stop-color="var(--green)"/><stop offset="1" stop-color="var(--green)"/></linearGradient></defs>
+  <g class="wave b" style="${ph(3.6)}"><path d="M0 30 q10 -14 20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0" fill="none" stroke="url(#wg)" stroke-width="2"/></g>
+  <g class="wave" style="${ph(2.4)}"><path d="M0 26 l8 0 l5 -16 l6 30 l5 -14 l16 0 l8 0 l5 -16 l6 30 l5 -14 l16 0 l8 0 l5 -16 l6 30 l5 -14 l16 0 l8 0 l5 -16 l6 30 l5 -14 l16 0" fill="none" stroke="url(#wg)" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/></g></svg>`;
+const SPIN = () => `<svg viewBox="0 0 116 52"><g style="transform-origin:94px 26px;animation:spin 1.1s linear infinite;${ph(1.1)}"><circle cx="94" cy="26" r="14" fill="none" stroke="var(--blue)" stroke-opacity=".2" stroke-width="4"/><path d="M94 12a14 14 0 0 1 14 14" fill="none" stroke="var(--blue)" stroke-width="4" stroke-linecap="round"/></g></svg>`;
+function moon(frac){
+  const C = 2 * Math.PI * 44;
+  return `<div class="moon"><svg viewBox="0 0 96 96"><circle cx="48" cy="48" r="44" fill="none" stroke="var(--teal)" stroke-opacity=".18" stroke-width="5"/>
+    <circle class="ringfill" cx="48" cy="48" r="44" fill="none" stroke="var(--teal)" stroke-width="5" stroke-linecap="round" stroke-dasharray="${(C*frac).toFixed(1)} ${C.toFixed(1)}" transform="rotate(-90 48 48)" style="transition:stroke-dasharray .8s"/>
+    <g class="core" style="${ph(5)}"><circle cx="48" cy="48" r="26" fill="color-mix(in srgb,var(--teal) 18%,transparent)"/>
+    <path d="M55 33a17 17 0 1 0 8 25a14 14 0 1 1 -8 -25z" fill="var(--teal)"/></g></svg>
+    <span class="z" style="${ph(4.5)}">z</span><span class="z">z</span><span class="z">Z</span></div>`;
+}
 const STATUS = {
   done:    {c:"var(--green)", i:ICON.check, t:"Done"},
   running: {c:"var(--blue)",  i:ICON.play,  t:"Running"},
@@ -253,12 +353,12 @@ const THERM = [{c:"var(--green)", t:"No throttling. The chip is running at full 
 function ring(r, w, frac, color){
   const C = 2 * Math.PI * r, f = Math.max(0, Math.min(1, frac || 0));
   return `<circle r="${r}" cx="60" cy="60" fill="none" stroke="${color}" stroke-opacity=".2" stroke-width="${w}"/>
-    <circle r="${r}" cx="60" cy="60" fill="none" stroke="${color}" stroke-width="${w}" stroke-linecap="round"
+    <circle class="ringfill" r="${r}" cx="60" cy="60" fill="none" stroke="${color}" stroke-width="${w}" stroke-linecap="round"
       stroke-dasharray="${(C * f).toFixed(1)} ${C.toFixed(1)}" transform="rotate(-90 60 60)" style="transition:stroke-dasharray .8s ease"/>`;
 }
 const expRow = (e, right) => {
   const S = STATUS[e.status] || STATUS.queued;
-  return `<details><summary class="row"><div class="ic" style="--c:${S.c}">${S.i}</div>
+  return `<details><summary class="row"><div class="ic ${e.status === "running" ? "spin" : ""}" style="--c:${S.c}">${S.i}</div>
     <div class="rt"><div class="t">${esc(e.title)}</div><div class="d">${esc(e.detail || "—")}</div></div>
     <div class="rv">${right ?? ""}</div>${ICON.chev}</summary>
     <div class="exp-why">${esc(e.why || "")}</div></details>`;
@@ -268,17 +368,23 @@ function renderNow(s){
   const st = STATES[s.state] || {label:s.state, c:"var(--gray)"};
   const items = s.experiments?.items || [];
   const cur = items.find(i => i.status === "running");
-  let h = `<span class="pill" style="--c:${st.c}"><i></i>${esc(st.label)}</span>`;
-  if (s.state === "cooling" && s.cooldown){
-    const left = s.cooldown.until - now();
-    h += `<div class="job">Mac is resting</div><div class="jobd">Training resumes at ${hm(s.cooldown.until)} (${dur(left)} left). A 30-minute rest follows every 8 hours of training.</div>
-      <div class="bar" style="--c:var(--teal)"><b style="width:${pct(s.cooldown.minutes*60 - left, s.cooldown.minutes*60)}%"></b></div>`;
+  const live = ["training", "between", "cooling"].includes(s.state);
+  let h = `<span class="pill ${live ? "anim" : ""}" style="--c:${st.c}"><i></i>${esc(st.label)}</span>`;
+  $("hero").style.setProperty("--hc", st.c);
+  if (s.state === "estopped"){
+    h += `<div class="job">Stopped from the phone</div><div class="jobd">Emergency stop at ${hm(s.estop.at)}. The running experiment saved a checkpoint and Claude's round was ended. Nothing restarts until the next shift (<code>run_loop.sh</code>), which resumes where it stopped.</div>`;
+  } else if (s.state === "cooling" && s.cooldown){
+    const total = s.cooldown.minutes * 60, left = Math.max(0, s.cooldown.until - now());
+    h += `<div class="restviz">${moon(pct(total - left, total) / 100)}<div style="min-width:0">
+        <div class="job" style="margin:0">Mac is resting</div><div class="big" style="color:var(--teal)">${dur(left)}</div>
+        <div class="jobd">left · training resumes at ${hm(s.cooldown.until)}</div></div></div>
+      <div class="why">A ${Math.round(s.cooldown.minutes)}-minute rest after every ${s.rest?.work_h ?? 8} hours of training lets the chip cool down. The queue continues by itself afterwards.</div>`;
   } else if (s.job){
     const j = s.job, t = j.steps_total;
-    h += `<div class="job">${esc(j.title)}</div><div class="jobd">${esc(j.detail)}</div>`;
+    h += `<div class="viz">${WAVE()}</div><div class="job">${esc(j.title)}</div><div class="jobd">${esc(j.detail)}</div>`;
     if (t) {
       const el = s.job_started ? now() - s.job_started : null;
-      h += `<div class="bar" style="--c:var(--green)"><b style="width:${pct(j.steps_done, t)}%"></b></div>
+      h += `<div class="bar go" style="--c:var(--green)"><b style="width:${pct(j.steps_done, t)}%;${ph(.9)}"></b></div>
       <div class="meta"><span>${j.steps_done} of ${t} parts saved (build + 10 deletions)</span><span>${el ? "running " + dur(el) : ""}</span></div>`;
     } else h += `<div class="meta" style="margin-top:12px"><span>${s.job_started ? "running " + dur(now() - s.job_started) : ""}</span></div>`;
     if (j.last_activity) h += `<div class="meta" style="margin-top:4px"><span>Last training output ${ago(j.last_activity)}</span><span>${cur?.est_min ? "typical run " + mins(cur.est_min) : ""}</span></div>`;
@@ -288,11 +394,12 @@ function renderNow(s){
   } else if (s.state === "stopped"){
     h += `<div class="job">Nothing is training</div><div class="jobd">The queue runner is not running. Claude restarts it at the start of its next round.</div>`;
   } else {
-    h += `<div class="job">${s.state === "queue_empty" ? "All queued experiments done" : "Between experiments"}</div>`;
+    h += `${s.state === "between" ? `<div class="viz">${SPIN()}</div>` : ""}<div class="job">${s.state === "queue_empty" ? "All queued experiments done 🎉" : "Between experiments"}</div>`;
   }
   if (s.cooldown && !s.cooldown.until && s.state !== "off")
     h += `<div class="meta" style="margin-top:10px"><span>Rest requested: starts when this experiment's current part is saved</span></div>`;
   $("hero").innerHTML = h;
+  renderCycle(s);
 
   const q = s.queue, sh = s.shift || {};
   const shiftFrac = sh.start && sh.end ? (now() - sh.start) / (sh.end - sh.start) : 0;
@@ -318,14 +425,20 @@ function renderNow(s){
     `<div class="kv" style="border-top:.5px solid var(--sep)"><span>${cl.working ? "Claude is working (round " + (cl.rounds || 1) + ")" : U.status === "limited" || U.status === "rejected" ? "Claude is waiting for the limit to reset" : s.in_shift ? "Claude is resting between rounds" : "Claude is off (no shift)"}</span><span>${U.probed_at ? "checked " + ago(U.probed_at) : ""}</span></div>`;
 
   if (sh.end){
-    const cd = s.cooldown; let em = "";
-    if (cd && cd.until && sh.start) { const a = pct(cd.until - cd.minutes*60 - sh.start, sh.end - sh.start), b = pct(cd.minutes*60, sh.end - sh.start); em = `<em style="left:${a}%;width:${b}%"></em>`; }
+    const cd = s.cooldown, R = s.rest || {}, span = sh.end - sh.start; let em = "";
+    const band = (a, b, cls) => { if (!sh.start || b < sh.start || a > sh.end) return "";
+      em += `<em class="${cls}" style="left:${pct(a - sh.start, span)}%;width:${Math.max(.8, pct(Math.min(b, sh.end) - Math.max(a, sh.start), span))}%"></em>`; };
+    (R.history || []).forEach(([a, b]) => band(a, b, "rest"));
+    if (cd && cd.until) band(cd.until - cd.minutes * 60, cd.until, "rest");
+    else if (s.in_shift && R.next_at && R.next_at > now()) band(R.next_at, R.next_at + R.rest_min * 60, "plan");
+    if (s.in_shift && sh.start) em += `<i class="nowmark" style="left:${pct(now() - sh.start, span)}%"></i>`;
     const goal = s.plan_info?.shift_goals?.[(sh.number || 1) - 1];
     $("shift").innerHTML = `<div class="uh"><span class="n" style="font-size:17px;font-weight:600">Shift ${sh.number ?? "–"} of 12</span>
         <span class="rv">${s.in_shift ? dur(sh.end - now()) + " left" : "ended " + hm(sh.end)}</span></div>
       ${goal ? `<div class="jobd" style="margin-top:3px">Goal: ${esc(goal)}</div>` : ""}
       <div class="tl"><b style="width:${s.in_shift ? pct(now() - sh.start, sh.end - sh.start) : 100}%"></b>${em}</div>
       <div class="meta"><span>${sh.start ? hm(sh.start) : ""}</span><span>wrap-up ${esc(sh.wrap_from)}</span><span>${hm(sh.end)}</span></div>
+      <div class="meta" style="margin-top:6px;justify-content:flex-start;gap:14px"><span><span style="display:inline-block;width:10px;height:6px;border-radius:2px;background:var(--violet)"></span> elapsed</span><span><span style="display:inline-block;width:10px;height:6px;border-radius:2px;background:var(--teal)"></span> rest</span><span><span style="display:inline-block;width:10px;height:6px;border-radius:2px;background:repeating-linear-gradient(90deg,var(--teal) 0 2px,transparent 2px 4px)"></span> next rest</span></div>
       <div class="meta" style="margin-top:10px"><span>${q.failed ? `<span style="color:var(--red)">${q.failed} failed</span>` : "No failed jobs"}</span><span>${s.results.count} result files</span></div>`;
   } else $("shift").innerHTML = `<div class="empty" style="padding:0">No shift has run yet.</div>`;
 
@@ -423,6 +536,129 @@ function renderMac(s){
     <div class="kv"><span>Cooling rule</span><span>30 min rest after 8 h</span></div>`;
 }
 
+function renderCycle(s){
+  const R = s.rest || {}, cd = s.cooldown, sh = s.shift || {};
+  const wh = R.work_h ?? 8, rm = R.rest_min ?? 30;
+  let frac = 0, c = "var(--gray)", t, d;
+  if (s.state === "cooling" && cd && cd.until){
+    const tot = cd.minutes * 60; frac = (tot - (cd.until - now())) / tot; c = "var(--teal)";
+    t = "Resting"; d = `Back to work at ${hm(cd.until)} · ${dur(cd.until - now())} left`;
+  } else if (cd && !cd.until && s.in_shift){
+    frac = 1; c = "var(--teal)"; t = "Rest is due";
+    d = "Starts as soon as the current experiment saves its result (timed deletions are never interrupted).";
+  } else if (s.in_shift && R.next_at && R.cycle_start){
+    frac = (now() - R.cycle_start) / (R.next_at - R.cycle_start); c = "var(--green)";
+    t = `Working · ${dur(now() - R.cycle_start)} of ${wh} h`;
+    d = R.next_at > (sh.end || Infinity) - 3600 ? "No rest needed before this shift ends."
+      : `Next ${rm}-minute rest at ${hm(R.next_at)} · in ${dur(R.next_at - now())}`;
+  } else if (s.in_shift){
+    t = "Rest timer not running"; d = `It starts with the queue runner: ${rm} min rest after every ${wh} h.`;
+  } else {
+    t = "Off shift"; d = `Every shift: a ${rm}-minute rest after every ${wh} hours of training.`;
+  }
+  const last = (R.history || []).slice(-1)[0];
+  $("cycle").innerHTML = `<div class="cyc"><svg width="56" height="56" viewBox="0 0 120 120">${ring(48, 20, frac, c)}</svg>
+    <div class="rt"><div class="t" style="font-weight:600">${t}</div><div class="d" style="white-space:normal">${d}</div>
+    ${last ? `<div class="d">Last rest ${hm(last[0])}–${hm(last[1])}${R.history.length > 1 ? ` · ${R.history.length} rests in 24 h` : ""}</div>` : ""}</div></div>`;
+}
+
+// ---------- pairing (secret stays on this phone; the public page never contains it) ----------
+let pair = null;
+try { pair = JSON.parse(localStorage.getItem("pair") || "null"); } catch (e) {}
+(function(){
+  const m = location.hash.match(/pair=([A-Za-z0-9_-]+)/); if (!m) return;
+  try {
+    const b = m[1].replace(/-/g, "+").replace(/_/g, "/"), j = JSON.parse(atob(b + "===".slice((b.length + 3) % 4)));
+    if (j.k && j.n && j.c){ pair = j; try { localStorage.setItem("pair", JSON.stringify(j)); } catch (e) {} setTimeout(() => toast("✅ This phone is paired with the Mac"), 600); }
+  } catch (e) { setTimeout(() => toast("Pairing link not valid"), 600); }
+  history.replaceState(null, "", location.pathname + location.search);
+})();
+const hex = b => [...new Uint8Array(b)].map(x => x.toString(16).padStart(2, "0")).join("");
+async function sendStop(){
+  const ts = Math.floor(Date.now() / 1000), nonce = hex(crypto.getRandomValues(new Uint8Array(12)));
+  const key = await crypto.subtle.importKey("raw", new Uint8Array(pair.k.match(/../g).map(h => parseInt(h, 16))),
+    {name: "HMAC", hash: "SHA-256"}, false, ["sign"]);
+  const sig = hex(await crypto.subtle.sign("HMAC", key, new TextEncoder().encode(`stop|${ts}|${nonce}`)));
+  const r = await fetch(`${pair.s || "https://ntfy.sh"}/${pair.c}`, {method: "POST", body: JSON.stringify({cmd: "stop", ts, nonce, sig})});
+  if (!r.ok) throw new Error("HTTP " + r.status);
+}
+let holding = false, holdTimer = null, stopSentAt = null, ctlHtml = "";
+function renderControls(s){
+  if (holding) return;
+  const canStop = pair && !["off", "estopped"].includes(s.state);
+  const br = s.processes?.bridge;
+  const sent = stopSentAt && s.state !== "estopped" && now() - stopSentAt < 600;
+  let h = "";
+  if (pair){
+    h += `<div class="ctl"><div class="t">🔔 Push notifications</div>
+      <div class="d">Install the free <b>ntfy</b> app, tap <b>+</b> and subscribe to this topic. You get a push when a job finishes or fails, when a rest starts or ends, and when a shift starts or ends.</div>
+      <div style="margin-top:8px"><code>${esc(pair.n)}</code></div>
+      <div class="btns"><button class="btn" data-act="copy">Copy topic</button><a class="btn" href="${esc((pair.s || "https://ntfy.sh") + "/" + pair.n)}" target="_blank" rel="noopener">Open in ntfy</a></div></div>`;
+  } else {
+    h += `<div class="ctl"><div class="t">🔗 Pair this phone</div><div class="d">Pairing unlocks push notifications and the emergency stop. On the Mac run <code>python3 scripts/phone_bridge.py --pair</code> and open the link on this phone once. The key stays on this phone and never goes into the public page.</div></div>`;
+  }
+  h += `<div class="ctl"><div class="t">🛑 Emergency stop</div>
+    <div class="d">Ends the shift now. The running experiment saves a checkpoint at its next epoch (seconds), and the queue and Claude stop. The next <code>run_loop.sh</code> continues where it stopped.</div>
+    <div class="d" style="margin-top:6px;color:${br ? "var(--green)" : "var(--orange)"}">● Mac bridge ${br ? "online" : "offline: the stop cannot reach the Mac"}</div>
+    <button class="estop ${canStop && !sent ? "armed" : ""}" ${canStop && !sent ? "" : "disabled"}><span class="fill"></span><span>${
+      s.state === "estopped" ? "Stopped at " + hm(s.estop.at) : sent ? "Stop sent · waiting for the Mac…" : !pair ? "Pair this phone first" :
+      s.state === "off" ? "Nothing to stop (off shift)" : "Press and hold to stop training"}</span></button>
+    ${pair ? `<div class="btns" style="justify-content:flex-end"><button class="btn" data-act="unpair" style="background:none;padding:6px 0;font-weight:500;font-size:13px;color:var(--text2)">Unpair this phone</button></div>` : ""}</div>`;
+  if (h !== ctlHtml){ $("controls").innerHTML = h; ctlHtml = h; }
+  $("ctlnote").textContent = "The stop is signed with this phone's key and checked by the Mac, so nobody else who opens this page can stop the training.";
+}
+function cancelHold(){ if (!holding) return; holding = false; clearTimeout(holdTimer); document.querySelector(".estop")?.classList.remove("holding"); }
+$("controls").addEventListener("pointerdown", e => {
+  const b = e.target.closest(".estop"); if (!b || b.disabled) return;
+  e.preventDefault(); holding = true; b.classList.add("holding");
+  holdTimer = setTimeout(async () => {
+    holding = false; b.classList.remove("holding");
+    navigator.vibrate?.(60);
+    if (!confirm("Stop the training now?\n\nThe running experiment saves a checkpoint and the rest of this shift is cancelled.")) return;
+    try { await sendStop(); stopSentAt = now(); toast("🛑 Stop sent. Your phone gets a push when the Mac confirms."); }
+    catch (err) { toast("Could not send the stop (" + err.message + "). Check your connection."); }
+    ctlHtml = ""; last && renderControls(last);
+  }, 2000);
+});
+["pointerup", "pointerleave", "pointercancel"].forEach(ev => $("controls").addEventListener(ev, cancelHold));
+$("controls").addEventListener("click", async e => {
+  const a = e.target.closest("[data-act]")?.dataset.act;
+  if (a === "copy"){ try { await navigator.clipboard.writeText(pair.n); toast("Topic copied"); } catch (err) { toast(pair.n); } }
+  if (a === "unpair" && confirm("Unpair this phone? You can pair again with the link from the Mac.")){
+    pair = null; try { localStorage.removeItem("pair"); } catch (err) {} ctlHtml = ""; last && renderControls(last); }
+});
+
+// ---------- toast + confetti ----------
+let toastT = null;
+function toast(msg){ const t = $("toast"); t.textContent = msg; t.classList.add("on"); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove("on"), 3800); }
+function confetti(){
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const cv = $("confetti"), cx = cv.getContext("2d"), dpr = devicePixelRatio || 1;
+  cv.width = innerWidth * dpr; cv.height = innerHeight * dpr; cx.scale(dpr, dpr);
+  const cols = ["#ff9f0a", "#bf5af2", "#32ade6", "#30d158", "#ff375f", "#ffd60a"];
+  const P = Array.from({length: 140}, () => ({x: innerWidth / 2 + (Math.random() - .5) * 80, y: innerHeight * .35,
+    vx: (Math.random() - .5) * 11, vy: -Math.random() * 12 - 4, r: Math.random() * 6 + 4, a: Math.random() * 6,
+    va: (Math.random() - .5) * .4, c: cols[Math.floor(Math.random() * cols.length)]}));
+  const t0 = performance.now();
+  (function f(t){
+    cx.clearRect(0, 0, innerWidth, innerHeight);
+    const age = (t - t0) / 1000;
+    P.forEach(p => { p.vy += .32; p.vx *= .99; p.x += p.vx; p.y += p.vy; p.a += p.va;
+      cx.save(); cx.globalAlpha = Math.max(0, 1 - age / 3); cx.translate(p.x, p.y); cx.rotate(p.a);
+      cx.fillStyle = p.c; cx.fillRect(-p.r / 2, -p.r / 4, p.r, p.r / 2); cx.restore(); });
+    if (age < 3.2) requestAnimationFrame(f); else cx.clearRect(0, 0, innerWidth, innerHeight);
+  })(t0);
+}
+function celebrate(s){
+  const d = s.queue?.done; if (d == null) return;
+  let seen = null; try { seen = localStorage.getItem("seenDone"); } catch (e) {}
+  if (seen != null && d > +seen){
+    const r = (s.queue.recent || []).find(x => x.ok);
+    confetti(); toast(`🎉 ${d - seen} experiment${d - seen > 1 ? "s" : ""} finished since you last looked` + (r ? ` · latest: ${r.title}` : ""));
+  }
+  try { localStorage.setItem("seenDone", d); } catch (e) {}
+}
+
 function render(s){
   const stale = now() - s.updated > 25 * 60;
   $("live").classList.toggle("stale", stale);
@@ -431,8 +667,10 @@ function render(s){
   const p = s.power || {};
   if (p.source !== "AC" && s.in_shift){ $("err").style.display = "block"; $("err").innerHTML = "<b>The Mac is on battery.</b> Training will drain it before the shift ends."; }
   else $("err").style.display = "none";
-  for (const f of [renderNow, renderExp, renderPlan, renderMac]) { try { f(s); } catch (e) { console.error(e); } }
+  for (const f of [renderNow, renderExp, renderPlan, renderMac, renderControls]) { try { f(s); } catch (e) { console.error(e); } }
 }
+document.body.classList.add("intro");
+let introDone = false;
 
 const TITLES = {now: "Training", exp: "Experiments", plan: "Plan", mac: "Mac"};
 function show(v){
@@ -449,7 +687,8 @@ async function load(){
   try {
     const r = await fetch("status.json?t=" + Date.now(), {cache: "no-store"});
     if (!r.ok) throw new Error(r.status);
-    last = await r.json(); render(last);
+    last = await r.json(); render(last); celebrate(last);
+    if (!introDone){ introDone = true; setTimeout(() => document.body.classList.remove("intro"), 2000); }
   } catch (e) {
     if (last) render(last);
     $("updated").textContent = "Could not load status (offline?)";
