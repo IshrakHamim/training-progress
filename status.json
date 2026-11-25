@@ -1,5 +1,5 @@
 {
- "updated": 1795572943.3394449,
+ "updated": 1795573443.64269,
  "state": "training",
  "shift": {
   "start": 1795543200.0,
@@ -15,9 +15,9 @@
  "job": {
   "title": "SISA baseline",
   "detail": "seed 0",
-  "steps_done": 5,
+  "steps_done": 6,
   "steps_total": 11,
-  "last_activity": 1795572665.347342
+  "last_activity": 1795573258.3429353
  },
  "job_started": 1795569372.0,
  "processes": {
@@ -73,7 +73,7 @@
   "next": [
    {
     "title": "ARCANE baseline",
-    "detail": "seed 0 \u00b7 variant nobn"
+    "detail": "seed 0 \u00b7 no BatchNorm"
    },
    {
     "title": "Scratch reference",
@@ -86,7 +86,7 @@
   ]
  },
  "results": {
-  "count": 96,
+  "count": 97,
   "per_hour_24h": [
    0,
    0,
@@ -98,20 +98,20 @@
    0,
    0,
    0,
+   1,
+   1,
    0,
+   0,
+   0,
+   5,
    2,
-   0,
-   0,
-   0,
-   0,
-   7,
    6,
    9,
-   7,
-   26,
+   22,
+   13,
    12,
-   15,
-   12
+   20,
+   6
   ]
  },
  "plan": {
@@ -160,7 +160,7 @@
   "source": "AC",
   "battery": 90,
   "battery_state": "AC attached",
-  "load": 1.9,
+  "load": 1.6,
   "cores": 15
  },
  "claude": {
@@ -184,5 +184,599 @@
  "deadlines": {
   "freeze": 1796551200.0,
   "submit": 1796752740.0
+ },
+ "experiments": {
+  "items": [
+   {
+    "title": "Our system",
+    "detail": "seed 0",
+    "group": "main",
+    "why": "Our system: class-aware shards with one class per slice, replay of earlier classes, and a learned gate that is retrained on every deletion. Built once, then each of the 10 classes is deleted in turn while time-to-compliance (TTC) and accuracy are measured.",
+    "status": "done",
+    "minutes": 79,
+    "est_min": null
+   },
+   {
+    "title": "Single-model baseline",
+    "detail": "seed 0",
+    "group": "main",
+    "why": "Gold standard: one ResNet-20 retrained from scratch without the class. Exact by definition; it sets the time and accuracy every other system is compared with.",
+    "status": "done",
+    "minutes": 101,
+    "est_min": null
+   },
+   {
+    "title": "Inference benchmark",
+    "detail": "",
+    "group": "main",
+    "why": "Inference latency and throughput of every system on the M5 Pro.",
+    "status": "done",
+    "minutes": 0,
+    "est_min": null
+   },
+   {
+    "title": "Original paper reproduction",
+    "detail": "2\u00d75",
+    "group": "repro",
+    "why": "Runs the ORIGINAL paper's code on this Mac (shards x slices, deleting 'dog') with nothing else on the GPU, so the original timings can be checked fairly.",
+    "status": "done",
+    "minutes": 5,
+    "est_min": null
+   },
+   {
+    "title": "Original paper reproduction",
+    "detail": "2\u00d73",
+    "group": "repro",
+    "why": "Runs the ORIGINAL paper's code on this Mac (shards x slices, deleting 'dog') with nothing else on the GPU, so the original timings can be checked fairly.",
+    "status": "done",
+    "minutes": 4,
+    "est_min": null
+   },
+   {
+    "title": "Original Model 1",
+    "detail": "",
+    "group": "repro",
+    "why": "The original paper's single-model full-retrain baseline, re-implemented because it was missing from the code repository.",
+    "status": "done",
+    "minutes": 4,
+    "est_min": null
+   },
+   {
+    "title": "Our system, stale gate",
+    "detail": "seed 0",
+    "group": "main",
+    "why": "Negative control: keeps the OLD gate, which still learned from the deleted class. Shows that accuracy checks cannot detect this; only the lineage audit can, so the gate must be retrained.",
+    "status": "done",
+    "minutes": 64,
+    "est_min": null
+   },
+   {
+    "title": "Availability test",
+    "detail": "seed 0",
+    "group": "main",
+    "why": "What the system can still serve, compliantly, while a deletion rebuild is running.",
+    "status": "done",
+    "minutes": 1,
+    "est_min": null
+   },
+   {
+    "title": "Prediction backfill",
+    "detail": "seed 0",
+    "group": "main",
+    "why": "Housekeeping: adds saved test-set predictions to earlier results (no training).",
+    "status": "done",
+    "minutes": 0,
+    "est_min": null
+   },
+   {
+    "title": "Our system",
+    "detail": "seed 0 \u00b7 replay 0.5",
+    "group": "main",
+    "why": "Same system with less replay data per slice: deletions get faster, accuracy drops a little. This is the main speed vs accuracy trade-off curve of the paper.",
+    "status": "done",
+    "minutes": 50,
+    "est_min": null
+   },
+   {
+    "title": "Our system",
+    "detail": "seed 0 \u00b7 replay 0.3",
+    "group": "main",
+    "why": "Same system with less replay data per slice: deletions get faster, accuracy drops a little. This is the main speed vs accuracy trade-off curve of the paper.",
+    "status": "done",
+    "minutes": 41,
+    "est_min": null
+   },
+   {
+    "title": "Our system",
+    "detail": "seed 0 \u00b7 likely-last order",
+    "group": "main",
+    "why": "Puts the classes most likely to be deleted in the LAST slices, so deleting them retrains less. Tests whether knowing the request pattern lowers the expected cost.",
+    "status": "done",
+    "minutes": 78,
+    "est_min": null
+   },
+   {
+    "title": "ARCANE baseline",
+    "detail": "seed 0",
+    "group": "main",
+    "why": "ARCANE (Yan et al., IJCAI 2022), the closest prior method: one one-class model per class. A competing BASELINE we re-implemented (no official code), not a reproduction of our own paper.",
+    "status": "done",
+    "minutes": 9,
+    "est_min": null
+   },
+   {
+    "title": "SISA baseline",
+    "detail": "seed 0",
+    "group": "main",
+    "why": "Classic SISA (Bourtoule et al. 2021) with random sharding. Every shard holds every class, so deleting one class retrains all shards: the baseline our class-aware placement improves on.",
+    "status": "running",
+    "minutes": null,
+    "est_min": 50
+   },
+   {
+    "title": "ARCANE baseline",
+    "detail": "seed 0 \u00b7 no BatchNorm",
+    "group": "main",
+    "why": "ARCANE again without BatchNorm: a fix for its one-class models collapsing, so the baseline gets its fairest chance.",
+    "status": "queued",
+    "minutes": null,
+    "est_min": 9
+   },
+   {
+    "title": "Scratch reference",
+    "detail": "seed 0 \u00b7 class 5 \u00b7 rep 0",
+    "group": "verify",
+    "why": "Exactness check on the GPU: two independent from-scratch builds without one class. The unlearned system must be no further from them than they are from each other (GPU noise floor).",
+    "status": "queued",
+    "minutes": null,
+    "est_min": 50
+   },
+   {
+    "title": "Scratch reference",
+    "detail": "seed 0 \u00b7 class 5 \u00b7 rep 1",
+    "group": "verify",
+    "why": "Exactness check on the GPU: two independent from-scratch builds without one class. The unlearned system must be no further from them than they are from each other (GPU noise floor).",
+    "status": "queued",
+    "minutes": null,
+    "est_min": 50
+   },
+   {
+    "title": "Scratch reference",
+    "detail": "seed 0 \u00b7 class 0 \u00b7 rep 0",
+    "group": "verify",
+    "why": "Exactness check on the GPU: two independent from-scratch builds without one class. The unlearned system must be no further from them than they are from each other (GPU noise floor).",
+    "status": "queued",
+    "minutes": null,
+    "est_min": 50
+   },
+   {
+    "title": "Scratch reference",
+    "detail": "seed 0 \u00b7 class 0 \u00b7 rep 1",
+    "group": "verify",
+    "why": "Exactness check on the GPU: two independent from-scratch builds without one class. The unlearned system must be no further from them than they are from each other (GPU noise floor).",
+    "status": "queued",
+    "minutes": null,
+    "est_min": 50
+   },
+   {
+    "title": "Sequential deletions",
+    "detail": "ARCANE \u00b7 seed 0 \u00b7 order 0",
+    "group": "verify",
+    "why": "A stream of deletion requests, one after another, in a random order: how cost and accuracy evolve as deletions pile up (our system and ARCANE run for real).",
+    "status": "queued",
+    "minutes": null,
+    "est_min": 50
+   },
+   {
+    "title": "Sequential deletions",
+    "detail": "ARCANE \u00b7 seed 0 \u00b7 order 1",
+    "group": "verify",
+    "why": "A stream of deletion requests, one after another, in a random order: how cost and accuracy evolve as deletions pile up (our system and ARCANE run for real).",
+    "status": "queued",
+    "minutes": null,
+    "est_min": 50
+   },
+   {
+    "title": "Sequential deletions",
+    "detail": "ARCANE \u00b7 seed 0 \u00b7 order 2",
+    "group": "verify",
+    "why": "A stream of deletion requests, one after another, in a random order: how cost and accuracy evolve as deletions pile up (our system and ARCANE run for real).",
+    "status": "queued",
+    "minutes": null,
+    "est_min": 50
+   },
+   {
+    "title": "Sequential deletions",
+    "detail": "our system \u00b7 seed 0 \u00b7 order 0",
+    "group": "verify",
+    "why": "A stream of deletion requests, one after another, in a random order: how cost and accuracy evolve as deletions pile up (our system and ARCANE run for real).",
+    "status": "queued",
+    "minutes": null,
+    "est_min": 50
+   },
+   {
+    "title": "Sequential deletions",
+    "detail": "our system \u00b7 seed 0 \u00b7 order 1",
+    "group": "verify",
+    "why": "A stream of deletion requests, one after another, in a random order: how cost and accuracy evolve as deletions pile up (our system and ARCANE run for real).",
+    "status": "queued",
+    "minutes": null,
+    "est_min": 50
+   },
+   {
+    "title": "Sequential deletions",
+    "detail": "our system \u00b7 seed 0 \u00b7 order 2",
+    "group": "verify",
+    "why": "A stream of deletion requests, one after another, in a random order: how cost and accuracy evolve as deletions pile up (our system and ARCANE run for real).",
+    "status": "queued",
+    "minutes": null,
+    "est_min": 50
+   },
+   {
+    "title": "Our system",
+    "detail": "seed 1",
+    "group": "seeds",
+    "why": "Our system: class-aware shards with one class per slice, replay of earlier classes, and a learned gate that is retrained on every deletion. Built once, then each of the 10 classes is deleted in turn while time-to-compliance (TTC) and accuracy are measured.",
+    "status": "queued",
+    "minutes": null,
+    "est_min": 62
+   },
+   {
+    "title": "Single-model baseline",
+    "detail": "seed 1",
+    "group": "seeds",
+    "why": "Gold standard: one ResNet-20 retrained from scratch without the class. Exact by definition; it sets the time and accuracy every other system is compared with.",
+    "status": "queued",
+    "minutes": null,
+    "est_min": 101
+   },
+   {
+    "title": "Our system",
+    "detail": "seed 2",
+    "group": "seeds",
+    "why": "Our system: class-aware shards with one class per slice, replay of earlier classes, and a learned gate that is retrained on every deletion. Built once, then each of the 10 classes is deleted in turn while time-to-compliance (TTC) and accuracy are measured.",
+    "status": "queued",
+    "minutes": null,
+    "est_min": 62
+   },
+   {
+    "title": "Single-model baseline",
+    "detail": "seed 2",
+    "group": "seeds",
+    "why": "Gold standard: one ResNet-20 retrained from scratch without the class. Exact by definition; it sets the time and accuracy every other system is compared with.",
+    "status": "queued",
+    "minutes": null,
+    "est_min": 101
+   },
+   {
+    "title": "Our system, stale gate",
+    "detail": "seed 1",
+    "group": "seeds",
+    "why": "Negative control: keeps the OLD gate, which still learned from the deleted class. Shows that accuracy checks cannot detect this; only the lineage audit can, so the gate must be retrained.",
+    "status": "queued",
+    "minutes": null,
+    "est_min": 62
+   },
+   {
+    "title": "Our system, stale gate",
+    "detail": "seed 2",
+    "group": "seeds",
+    "why": "Negative control: keeps the OLD gate, which still learned from the deleted class. Shows that accuracy checks cannot detect this; only the lineage audit can, so the gate must be retrained.",
+    "status": "queued",
+    "minutes": null,
+    "est_min": 62
+   },
+   {
+    "title": "ARCANE baseline",
+    "detail": "seed 1",
+    "group": "seeds",
+    "why": "ARCANE (Yan et al., IJCAI 2022), the closest prior method: one one-class model per class. A competing BASELINE we re-implemented (no official code), not a reproduction of our own paper.",
+    "status": "queued",
+    "minutes": null,
+    "est_min": 9
+   },
+   {
+    "title": "ARCANE baseline",
+    "detail": "seed 2",
+    "group": "seeds",
+    "why": "ARCANE (Yan et al., IJCAI 2022), the closest prior method: one one-class model per class. A competing BASELINE we re-implemented (no official code), not a reproduction of our own paper.",
+    "status": "queued",
+    "minutes": null,
+    "est_min": 9
+   },
+   {
+    "title": "SISA baseline",
+    "detail": "seed 1",
+    "group": "seeds",
+    "why": "Classic SISA (Bourtoule et al. 2021) with random sharding. Every shard holds every class, so deleting one class retrains all shards: the baseline our class-aware placement improves on.",
+    "status": "queued",
+    "minutes": null,
+    "est_min": 50
+   },
+   {
+    "title": "SISA baseline",
+    "detail": "seed 2",
+    "group": "seeds",
+    "why": "Classic SISA (Bourtoule et al. 2021) with random sharding. Every shard holds every class, so deleting one class retrains all shards: the baseline our class-aware placement improves on.",
+    "status": "queued",
+    "minutes": null,
+    "est_min": 50
+   },
+   {
+    "title": "Our system",
+    "detail": "seed 1 \u00b7 replay 0.5",
+    "group": "seeds",
+    "why": "Same system with less replay data per slice: deletions get faster, accuracy drops a little. This is the main speed vs accuracy trade-off curve of the paper.",
+    "status": "queued",
+    "minutes": null,
+    "est_min": 62
+   },
+   {
+    "title": "Our system",
+    "detail": "seed 2 \u00b7 replay 0.5",
+    "group": "seeds",
+    "why": "Same system with less replay data per slice: deletions get faster, accuracy drops a little. This is the main speed vs accuracy trade-off curve of the paper.",
+    "status": "queued",
+    "minutes": null,
+    "est_min": 62
+   },
+   {
+    "title": "Our system",
+    "detail": "seed 1 \u00b7 replay 0.3",
+    "group": "seeds",
+    "why": "Same system with less replay data per slice: deletions get faster, accuracy drops a little. This is the main speed vs accuracy trade-off curve of the paper.",
+    "status": "queued",
+    "minutes": null,
+    "est_min": 62
+   },
+   {
+    "title": "Our system",
+    "detail": "seed 2 \u00b7 replay 0.3",
+    "group": "seeds",
+    "why": "Same system with less replay data per slice: deletions get faster, accuracy drops a little. This is the main speed vs accuracy trade-off curve of the paper.",
+    "status": "queued",
+    "minutes": null,
+    "est_min": 62
+   },
+   {
+    "title": "Our system",
+    "detail": "seed 1 \u00b7 likely-last order",
+    "group": "seeds",
+    "why": "Puts the classes most likely to be deleted in the LAST slices, so deleting them retrains less. Tests whether knowing the request pattern lowers the expected cost.",
+    "status": "queued",
+    "minutes": null,
+    "est_min": 62
+   },
+   {
+    "title": "Our system",
+    "detail": "seed 2 \u00b7 likely-last order",
+    "group": "seeds",
+    "why": "Puts the classes most likely to be deleted in the LAST slices, so deleting them retrains less. Tests whether knowing the request pattern lowers the expected cost.",
+    "status": "queued",
+    "minutes": null,
+    "est_min": 62
+   },
+   {
+    "title": "Fine-tune baseline",
+    "detail": "seed 0",
+    "group": "approx",
+    "why": "Approximate (NOT exact) baseline: fine-tune the full model on the remaining data. Cheap but no guarantee; gives context for cost and the privacy test.",
+    "status": "queued",
+    "minutes": null,
+    "est_min": 50
+   },
+   {
+    "title": "Fine-tune baseline",
+    "detail": "seed 1",
+    "group": "approx",
+    "why": "Approximate (NOT exact) baseline: fine-tune the full model on the remaining data. Cheap but no guarantee; gives context for cost and the privacy test.",
+    "status": "queued",
+    "minutes": null,
+    "est_min": 50
+   },
+   {
+    "title": "Fine-tune baseline",
+    "detail": "seed 2",
+    "group": "approx",
+    "why": "Approximate (NOT exact) baseline: fine-tune the full model on the remaining data. Cheap but no guarantee; gives context for cost and the privacy test.",
+    "status": "queued",
+    "minutes": null,
+    "est_min": 50
+   },
+   {
+    "title": "Our system",
+    "detail": "seed 0 \u00b7 balanced placement",
+    "group": "design",
+    "why": "Design-space sweep: other shard counts, placements or no replay, to map the trade-off space.",
+    "status": "queued",
+    "minutes": null,
+    "est_min": 62
+   },
+   {
+    "title": "Our system",
+    "detail": "seed 0 \u00b7 3 shards",
+    "group": "design",
+    "why": "Design-space sweep: other shard counts, placements or no replay, to map the trade-off space.",
+    "status": "queued",
+    "minutes": null,
+    "est_min": 62
+   },
+   {
+    "title": "Our system",
+    "detail": "seed 0 \u00b7 5 shards",
+    "group": "design",
+    "why": "Design-space sweep: other shard counts, placements or no replay, to map the trade-off space.",
+    "status": "queued",
+    "minutes": null,
+    "est_min": 62
+   },
+   {
+    "title": "Our system",
+    "detail": "seed 0 \u00b7 replay 0.0",
+    "group": "design",
+    "why": "Design-space sweep: other shard counts, placements or no replay, to map the trade-off space.",
+    "status": "queued",
+    "minutes": null,
+    "est_min": 62
+   },
+   {
+    "title": "SISA baseline",
+    "detail": "seed 0 \u00b7 5 shards",
+    "group": "design",
+    "why": "Classic SISA (Bourtoule et al. 2021) with random sharding. Every shard holds every class, so deleting one class retrains all shards: the baseline our class-aware placement improves on.",
+    "status": "queued",
+    "minutes": null,
+    "est_min": 50
+   }
+  ],
+  "groups": [
+   {
+    "id": "repro",
+    "name": "Reproduce the original paper",
+    "about": "Re-run the published code on this Mac and audit its numbers.",
+    "done": 3,
+    "total": 3,
+    "eta_min": 0
+   },
+   {
+    "id": "main",
+    "name": "Main comparison, seed 0",
+    "about": "Our system, its variants and every baseline, deleting each of the 10 classes.",
+    "done": 10,
+    "total": 12,
+    "eta_min": 59
+   },
+   {
+    "id": "verify",
+    "name": "Exactness & workload checks",
+    "about": "GPU noise-floor references and streams of sequential deletions.",
+    "done": 0,
+    "total": 10,
+    "eta_min": 500
+   },
+   {
+    "id": "seeds",
+    "name": "Repeat with seeds 1 and 2",
+    "about": "The same comparison twice more, for error bars.",
+    "done": 0,
+    "total": 16,
+    "eta_min": 940
+   },
+   {
+    "id": "approx",
+    "name": "Approximate baseline",
+    "about": "Fine-tuning instead of retraining (not exact), for context.",
+    "done": 0,
+    "total": 3,
+    "eta_min": 150
+   },
+   {
+    "id": "design",
+    "name": "Design-space sweep",
+    "about": "More shards, other placements, no replay: the wider trade-off map.",
+    "done": 0,
+    "total": 5,
+    "eta_min": 298
+   }
+  ],
+  "eta_min_total": 1947
+ },
+ "hardware": {
+  "chip": "Apple M5 Pro",
+  "cores": 15,
+  "ram_gb": 24,
+  "gpu_util": 64,
+  "gpu_mem_gb": 1.5,
+  "cpu_util": 6,
+  "mem_free_pct": 77,
+  "thermal": 0,
+  "thermal_label": "Nominal",
+  "throttling": false,
+  "history": [
+   [
+    1795573302,
+    null,
+    7,
+    0
+   ],
+   [
+    1795573320,
+    65,
+    6,
+    0
+   ],
+   [
+    1795573450,
+    64,
+    6,
+    0
+   ]
+  ]
+ },
+ "plan_info": {
+  "phases": {
+   "Phase 0": {
+    "label": "Setup",
+    "about": "Environment, data, code repositories, GPU throughput benchmark."
+   },
+   "Phase 1": {
+    "label": "Reproduction & exactness",
+    "about": "Re-run the original code, audit its evaluation, and re-implement the core so that deletion is EXACT by construction (proven bit-for-bit on CPU)."
+   },
+   "Phase 2": {
+    "label": "Systems evaluation",
+    "about": "Our system vs SISA, ARCANE and full retraining on all 10 classes x 3 seeds: time-to-compliance, storage, latency, verification, sequential deletions, design space."
+   },
+   "Phase 3": {
+    "label": "Evidence review",
+    "about": "Decide the paper's claims and title from the measured results."
+   },
+   "Phase 4": {
+    "label": "Paper",
+    "about": "Write the paper from the results files (tables generated by script), audit references, compile, final push."
+   }
+  },
+  "milestones": [
+   {
+    "name": "Milestone 1",
+    "at": 1795860000.0,
+    "about": "Reproduction done, all main experiments queued"
+   },
+   {
+    "name": "Milestone 2",
+    "at": 1796292000.0,
+    "about": "Main experiments done, claims decided"
+   },
+   {
+    "name": "Paper freeze",
+    "at": 1796551200.0,
+    "about": "Final draft, everything committed"
+   },
+   {
+    "name": "Submission",
+    "at": 1796752740.0,
+    "about": "Submitted by the authors"
+   }
+  ],
+  "shift_goals": [
+   "Job runner, original paper re-run, exact core re-implemented",
+   "First full runs of our system and the full-retrain baseline; audits",
+   "SISA and ARCANE baselines; requirements; exactness checks",
+   "All main experiments launched (Milestone 1)",
+   "Main experiments + findings",
+   "Main experiments + findings",
+   "Main experiments + findings",
+   "Main experiments + findings, plots",
+   "Finish experiments, trade-off plots, claims and title (Milestone 2)",
+   "Tables by script, full paper draft",
+   "Audits, references, self-review",
+   "Compile, checklist, final push (freeze)"
+  ]
+ },
+ "project": {
+  "title": "Erasure-ready class unlearning",
+  "paper": "arXiv:2604.27804",
+  "about": "We are rebuilding our class-unlearning paper as a systems paper: a classifier that can forget an entire class on request, exactly (as if it had never been trained on it), with measured time-to-compliance, storage and verification. The Mac trains in overnight shifts; Claude Code runs the experiments and writes the analysis.",
+  "hardware": "Apple M5 Pro, 24 GB, PyTorch on the Metal GPU (MPS)"
  }
 }

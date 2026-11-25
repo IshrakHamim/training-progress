@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Training Progress</title>
-<meta name="description" content="Live status of the overnight training shift.">
+<meta name="description" content="Live status of the overnight training runs for our class-unlearning systems paper.">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Training">
@@ -17,61 +17,68 @@
 <style>
 :root{
   --bg:#f2f2f7; --card:#ffffff; --text:#000000; --text2:rgba(60,60,67,.6); --text3:rgba(60,60,67,.3);
-  --sep:rgba(60,60,67,.18); --fill:rgba(120,120,128,.12);
-  --green:#34c759; --orange:#ff9500; --amber:#ff9f0a; --red:#ff3b30; --blue:#007aff; --teal:#30b0c7;
-  --violet:#af52de; --indigo:#5856d6; --gray:#8e8e93;
+  --sep:rgba(60,60,67,.18); --fill:rgba(120,120,128,.12); --bar:rgba(249,249,249,.86);
+  --green:#34c759; --orange:#ff9500; --red:#ff3b30; --blue:#007aff; --teal:#30b0c7; --violet:#af52de;
+  --indigo:#5856d6; --gray:#8e8e93; --yellow:#ffcc00;
   --ring1:#ff9f0a; --ring2:#bf5af2; --ring3:#32ade6;
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
     --bg:#000000; --card:#1c1c1e; --text:#ffffff; --text2:rgba(235,235,245,.6); --text3:rgba(235,235,245,.3);
-    --sep:rgba(84,84,88,.6); --fill:rgba(120,120,128,.24);
+    --sep:rgba(84,84,88,.6); --fill:rgba(120,120,128,.24); --bar:rgba(22,22,24,.86);
     --green:#30d158; --orange:#ff9f0a; --red:#ff453a; --blue:#0a84ff; --teal:#40c8e0; --violet:#bf5af2; --indigo:#5e5ce6;
-    --ring1:#ff9f0a; --ring2:#bf5af2; --ring3:#64d2ff;
+    --yellow:#ffd60a; --ring3:#64d2ff;
   }
 }
 :root[data-theme="dark"]{
   --bg:#000000; --card:#1c1c1e; --text:#ffffff; --text2:rgba(235,235,245,.6); --text3:rgba(235,235,245,.3);
-  --sep:rgba(84,84,88,.6); --fill:rgba(120,120,128,.24);
+  --sep:rgba(84,84,88,.6); --fill:rgba(120,120,128,.24); --bar:rgba(22,22,24,.86);
   --green:#30d158; --orange:#ff9f0a; --red:#ff453a; --blue:#0a84ff; --teal:#40c8e0; --violet:#bf5af2; --indigo:#5e5ce6;
-  --ring1:#ff9f0a; --ring2:#bf5af2; --ring3:#64d2ff;
+  --yellow:#ffd60a; --ring3:#64d2ff;
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html{-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--bg);color:var(--text);
   font:17px/1.3 -apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",system-ui,sans-serif;
-  padding:calc(env(safe-area-inset-top) + 8px) max(16px,env(safe-area-inset-right)) calc(env(safe-area-inset-bottom) + 28px) max(16px,env(safe-area-inset-left));
-  -webkit-font-smoothing:antialiased;-webkit-user-select:none;user-select:none}
+  padding:calc(env(safe-area-inset-top) + 8px) max(16px,env(safe-area-inset-right)) calc(env(safe-area-inset-bottom) + 96px) max(16px,env(safe-area-inset-left));
+  -webkit-font-smoothing:antialiased}
 .wrap{max-width:560px;margin:0 auto}
 .top{display:flex;justify-content:space-between;align-items:center;min-height:36px;color:var(--text2);font-size:15px}
 .top button{border:0;background:none;color:var(--blue);font:inherit;font-size:17px;padding:6px 0;cursor:pointer}
-h1{font-size:34px;line-height:41px;font-weight:700;letter-spacing:.37px;margin:2px 0 2px}
-.sub{color:var(--text2);font-size:15px;margin-bottom:18px;display:flex;align-items:center;gap:6px}
-.live{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 0 var(--green);animation:pulse 2s infinite}
+h1{font-size:34px;line-height:41px;font-weight:700;letter-spacing:.37px;margin:2px 0}
+.sub{color:var(--text2);font-size:15px;margin-bottom:16px;display:flex;align-items:center;gap:6px}
+.live{width:8px;height:8px;border-radius:50%;background:var(--green);animation:pulse 2s infinite;flex:none}
 .live.stale{background:var(--orange);animation:none}
 @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(52,199,89,.5)}70%{box-shadow:0 0 0 7px rgba(52,199,89,0)}100%{box-shadow:0 0 0 0 rgba(52,199,89,0)}}
 .hdr{font-size:13px;color:var(--text2);text-transform:uppercase;letter-spacing:-.08px;margin:22px 16px 7px}
+.foot-note{font-size:13px;color:var(--text2);margin:7px 16px 0;line-height:1.35}
 .card{background:var(--card);border-radius:12px;overflow:hidden}
 .pad{padding:16px}
 .hero{padding:18px 16px 16px}
 .pill{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;padding:4px 10px;border-radius:999px;
-  background:color-mix(in srgb,var(--c) 16%,transparent);color:var(--c)}
+  background:color-mix(in srgb,var(--c) 16%,transparent);color:var(--c);white-space:nowrap}
 .pill i{width:7px;height:7px;border-radius:50%;background:var(--c)}
 .job{font-size:22px;font-weight:700;letter-spacing:.35px;margin:12px 0 2px}
 .jobd{color:var(--text2);font-size:15px}
+.why{font-size:15px;line-height:1.4;color:var(--text);margin-top:10px}
 .bar{height:8px;border-radius:4px;background:var(--fill);overflow:hidden;margin:14px 0 8px}
 .bar>b{display:block;height:100%;border-radius:4px;background:var(--c,var(--blue));transition:width .6s ease}
-.meta{display:flex;justify-content:space-between;color:var(--text2);font-size:13px;font-variant-numeric:tabular-nums}
+.meta{display:flex;justify-content:space-between;gap:10px;color:var(--text2);font-size:13px;font-variant-numeric:tabular-nums}
 .rings{display:flex;align-items:center;gap:18px;padding:16px}
 .rings svg{flex:none}
 .legend{display:flex;flex-direction:column;gap:10px;min-width:0;flex:1}
 .lg .k{font-size:13px;color:var(--text2);display:flex;align-items:center;gap:6px}
-.lg .k i{width:9px;height:9px;border-radius:50%;background:var(--c)}
-.lg .v{font-size:20px;font-weight:600;font-variant-numeric:tabular-nums;color:var(--c);letter-spacing:.2px}
+.lg .k i{width:9px;height:9px;border-radius:50%;background:var(--c);flex:none}
+.lg .v{font-size:20px;font-weight:600;font-variant-numeric:tabular-nums;color:var(--c)}
 .lg .v small{font-size:14px;color:var(--text2);font-weight:500}
 .row{display:flex;align-items:center;gap:12px;padding:11px 16px;position:relative;min-height:44px}
-.row+.row::before{content:"";position:absolute;top:0;left:56px;right:0;height:.5px;background:var(--sep)}
-.row.plain+.row.plain::before{left:16px}
+.row+.row::before,.row+details::before,details+.row::before,details+details::before{content:"";position:absolute;top:0;left:58px;right:0;height:.5px;background:var(--sep)}
+details{position:relative}
+details>summary{list-style:none;cursor:pointer}
+details>summary::-webkit-details-marker{display:none}
+details .chev{transition:transform .2s;color:var(--text3);flex:none}
+details[open] .chev{transform:rotate(90deg)}
+.exp-why{font-size:14px;line-height:1.4;color:var(--text2);padding:0 16px 12px 58px}
 .ic{width:30px;height:30px;border-radius:7px;display:grid;place-items:center;background:var(--c);flex:none;color:#fff}
 .ic svg{width:18px;height:18px}
 .rt{flex:1;min-width:0}
@@ -80,80 +87,140 @@ h1{font-size:34px;line-height:41px;font-weight:700;letter-spacing:.37px;margin:2
 .rv{color:var(--text2);font-size:15px;font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
 .usage{padding:14px 16px}
 .usage+.usage{border-top:.5px solid var(--sep)}
-.uh{display:flex;justify-content:space-between;align-items:baseline}
+.uh{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
 .uh .n{font-size:15px}
 .uh .p{font-size:22px;font-weight:600;font-variant-numeric:tabular-nums}
 .usage .bar{margin:8px 0 6px}
-.chart{display:flex;align-items:flex-end;gap:3px;height:76px;padding:0 16px}
-.chart b{flex:1;background:var(--blue);border-radius:3px 3px 1px 1px;min-height:2px;opacity:.9}
+.chart{display:flex;align-items:flex-end;gap:2px;height:84px;padding:0 16px}
+.chart b{flex:1;background:var(--c,var(--blue));border-radius:2px 2px 1px 1px;min-height:2px}
 .chart b.z{background:var(--fill)}
 .axis{display:flex;justify-content:space-between;padding:6px 16px 14px;color:var(--text3);font-size:11px}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.tile{background:var(--card);border-radius:12px;padding:14px 16px}
+.tile{background:var(--card);border-radius:12px;padding:14px 16px;min-width:0}
 .tile .k{font-size:13px;color:var(--text2)}
 .tile .v{font-size:28px;font-weight:700;letter-spacing:.3px;font-variant-numeric:tabular-nums;margin-top:2px}
 .tile .v small{font-size:15px;font-weight:500;color:var(--text2)}
 .tile .s{font-size:13px;color:var(--text2);margin-top:2px}
 .tl{position:relative;height:8px;border-radius:4px;background:var(--fill);margin:12px 0 6px;overflow:hidden}
 .tl b{position:absolute;top:0;bottom:0;left:0;background:var(--violet);border-radius:4px}
-.tl em{position:absolute;top:0;bottom:0;background:var(--orange);opacity:.9}
-.phase{padding:12px 16px}
+.tl em{position:absolute;top:0;bottom:0;background:var(--teal)}
+.phase{padding:13px 16px}
 .phase+.phase{border-top:.5px solid var(--sep)}
-.phase .uh .n{font-size:15px}
-.phase .uh .p{font-size:15px;font-weight:500;color:var(--text2)}
+.phase .uh .n{font-size:16px;font-weight:600}
+.phase .uh .p{font-size:14px;font-weight:500;color:var(--text2);white-space:nowrap}
+.phase .ab{font-size:14px;color:var(--text2);margin-top:3px;line-height:1.35}
 .seg{display:flex;gap:3px;margin-top:8px}
 .seg i{flex:1;height:6px;border-radius:3px;background:var(--fill)}
 .seg i.x{background:var(--green)}
 .seg i.h{background:color-mix(in srgb,var(--green) 45%,transparent)}
+.ms{display:flex;gap:12px;padding:12px 16px;position:relative}
+.ms+.ms::before{content:"";position:absolute;top:0;left:44px;right:0;height:.5px;background:var(--sep)}
+.ms .dot{width:16px;height:16px;border-radius:50%;border:2px solid var(--c);flex:none;margin:3px 6px 0}
+.ms .dot.f{background:var(--c)}
+.ms .t{font-weight:600}
+.ms .d{font-size:14px;color:var(--text2)}
+.sh{display:flex;gap:12px;align-items:flex-start;padding:10px 16px;position:relative}
+.sh+.sh::before{content:"";position:absolute;top:0;left:52px;right:0;height:.5px;background:var(--sep)}
+.sh .num{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-size:13px;font-weight:700;flex:none;
+  background:var(--fill);color:var(--text2)}
+.sh .num.x{background:var(--green);color:#fff}
+.sh .num.now{background:var(--blue);color:#fff}
+.sh .g{font-size:15px;line-height:1.3}
+.sh .dt{font-size:13px;color:var(--text2)}
+.about{font-size:15px;line-height:1.45;padding:14px 16px}
+.about b{font-weight:600}
+.kv{display:flex;justify-content:space-between;gap:12px;padding:11px 16px;font-size:15px;position:relative}
+.kv+.kv::before{content:"";position:absolute;top:0;left:16px;right:0;height:.5px;background:var(--sep)}
+.kv span:last-child{color:var(--text2);text-align:right}
 .empty{color:var(--text2);font-size:15px;padding:14px 16px}
+.err{background:color-mix(in srgb,var(--orange) 16%,var(--card));border-radius:12px;padding:12px 16px;font-size:15px;margin-bottom:12px;display:none}
+.view{display:none}.view.on{display:block;animation:fade .25s ease}
+@keyframes fade{from{transform:translateY(4px)}to{transform:none}}
+.tabbar{position:fixed;left:0;right:0;bottom:0;background:var(--bar);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);
+  border-top:.5px solid var(--sep);display:flex;justify-content:space-around;padding:6px max(8px,env(safe-area-inset-right)) calc(env(safe-area-inset-bottom) + 4px) max(8px,env(safe-area-inset-left));z-index:9}
+.tabbar button{flex:1;max-width:120px;border:0;background:none;color:var(--gray);font:inherit;font-size:10px;font-weight:500;
+  display:flex;flex-direction:column;align-items:center;gap:3px;padding:3px 0;cursor:pointer}
+.tabbar button svg{width:26px;height:26px}
+.tabbar button.on{color:var(--blue)}
 .foot{color:var(--text3);font-size:12px;text-align:center;margin-top:24px;line-height:1.5}
-.err{background:color-mix(in srgb,var(--orange) 14%,var(--card));color:var(--text);border-radius:12px;padding:12px 16px;font-size:15px;margin-bottom:12px;display:none}
-@media (max-width:360px){.rings{gap:12px}.lg .v{font-size:18px}}
+@media (max-width:360px){.rings{gap:12px}.lg .v{font-size:18px}.tile .v{font-size:24px}}
 </style>
 </head>
 <body>
 <div class="wrap">
   <div class="top"><span id="today"></span><button id="refresh" aria-label="Refresh">Refresh</button></div>
-  <h1>Training</h1>
+  <h1 id="title">Training</h1>
   <div class="sub"><span class="live" id="live"></span><span id="updated">Loading…</span></div>
   <div class="err" id="err"></div>
 
-  <div class="card hero" id="hero"></div>
+  <!-- NOW -->
+  <section class="view on" id="v-now">
+    <div class="card hero" id="hero"></div>
+    <div class="hdr">Overview</div>
+    <div class="card rings" id="rings"></div>
+    <div class="hdr">Claude usage</div>
+    <div class="card" id="usage"></div>
+    <div class="hdr">This shift</div>
+    <div class="card pad" id="shift"></div>
+    <div class="hdr">Up next</div>
+    <div class="card" id="next"></div>
+    <div class="hdr">Recently finished</div>
+    <div class="card" id="recent"></div>
+  </section>
 
-  <div class="hdr">Overview</div>
-  <div class="card rings" id="rings"></div>
+  <!-- EXPERIMENTS -->
+  <section class="view" id="v-exp">
+    <div class="card rings" id="exp-sum"></div>
+    <div class="foot-note">Each experiment builds a system once, then deletes classes and measures how long it takes to comply and what accuracy is left. Times are GPU minutes; estimates come from similar finished runs. Tap a row to see why it is run.</div>
+    <div id="groups"></div>
+  </section>
 
-  <div class="hdr">Claude usage</div>
-  <div class="card" id="usage"></div>
+  <!-- PLAN -->
+  <section class="view" id="v-plan">
+    <div class="hdr" style="margin-top:4px">About this project</div>
+    <div class="card about" id="about"></div>
+    <div class="hdr">Milestones</div>
+    <div class="card" id="miles"></div>
+    <div class="hdr">Phases</div>
+    <div class="card" id="phases"></div>
+    <div class="hdr">Night shifts</div>
+    <div class="card" id="shifts"></div>
+    <div class="foot-note">A shift runs from about midnight to 16:00. Outside shifts the Mac is free for other work.</div>
+  </section>
 
-  <div class="hdr">This shift</div>
-  <div class="card pad" id="shift"></div>
-
-  <div class="hdr">Mac</div>
-  <div class="grid2" id="mac"></div>
-
-  <div class="hdr">Results saved · last 24 hours</div>
-  <div class="card" style="padding-top:16px"><div class="chart" id="chart"></div><div class="axis"><span>24 h ago</span><span>12 h</span><span>now</span></div></div>
-
-  <div class="hdr">Recently finished</div>
-  <div class="card" id="recent"></div>
-
-  <div class="hdr">Up next</div>
-  <div class="card" id="next"></div>
-
-  <div class="hdr">Paper plan</div>
-  <div class="card" id="plan"></div>
+  <!-- MAC -->
+  <section class="view" id="v-mac">
+    <div class="card hero" id="therm"></div>
+    <div class="hdr">Right now</div>
+    <div class="grid2" id="hw"></div>
+    <div class="hdr">GPU load · last 24 hours</div>
+    <div class="card" style="padding-top:16px"><div class="chart" id="gpuchart"></div><div class="axis" id="gpuaxis"></div></div>
+    <div class="hdr">Results saved · last 24 hours</div>
+    <div class="card" style="padding-top:16px"><div class="chart" id="chart"></div><div class="axis"><span>24 h ago</span><span>12 h</span><span>now</span></div></div>
+    <div class="hdr">Machine</div>
+    <div class="card" id="machine"></div>
+    <div class="foot-note">Thermal state is macOS's own throttling signal (Nominal → Fair → Serious → Critical). Chip temperatures in °C need an extra monitoring tool and are not shown. A 30-minute GPU rest is taken after every 8 hours of training.</div>
+  </section>
 
   <div class="foot" id="foot">Updates every 10 minutes while the Mac is awake.</div>
 </div>
+
+<nav class="tabbar" id="tabs">
+  <button data-v="now" class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>Now</button>
+  <button data-v="exp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6M10 3v6l-5 9a2 2 0 001.8 3h10.4a2 2 0 001.8-3l-5-9V3"/><path d="M7.5 15h9"/></svg>Experiments</button>
+  <button data-v="plan"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="16" height="15" rx="3"/><path d="M8 3v4M16 3v4M4 10h16M8 14h3M8 17h6"/></svg>Plan</button>
+  <button data-v="mac"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"/></svg>Mac</button>
+</nav>
 
 <script>
 const $ = id => document.getElementById(id);
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const now = () => Date.now() / 1000;
 const hm = t => new Date(t * 1000).toLocaleTimeString([], {hour: "2-digit", minute: "2-digit"});
+const dmy = t => new Date(t * 1000).toLocaleDateString([], {weekday:"short", day: "numeric", month: "short"});
 function dur(s){ s = Math.max(0, Math.round(s)); const d = Math.floor(s/86400), h = Math.floor(s%86400/3600), m = Math.floor(s%3600/60);
   if (d) return `${d}d ${h}h`; if (h) return `${h}h ${m}m`; return `${m}m`; }
+const mins = m => m == null ? "" : m >= 60 ? `${Math.floor(m/60)}h ${m%60}m` : `${m}m`;
 function ago(t){ const s = now() - t; if (s < 60) return "just now"; return dur(s) + " ago"; }
 const pct = (a, b) => b ? Math.max(0, Math.min(100, 100 * a / b)) : 0;
 
@@ -162,19 +229,26 @@ const ICON = {
   check:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>',
   x:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M7 7l10 10M17 7L7 17"/></svg>',
   clock:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>',
-  bolt:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 2L4.5 13.5H11L10 22l8.5-11.5H12z"/></svg>',
-  spark:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.2 6.6L21 11l-6.8 2.4L12 20l-2.2-6.6L3 11l6.8-2.4z"/></svg>',
-  moon:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 14.5A8 8 0 019.5 4a8 8 0 1010.5 10.5z"/></svg>',
-  snow:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 3v18M4.2 7.5l15.6 9M4.2 16.5l15.6-9"/></svg>',
+  chev:'<svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>',
 };
 const STATES = {
-  training:   {label:"Training",        c:"var(--green)"},
-  cooling:    {label:"Cooling down",    c:"var(--teal)"},
+  training:   {label:"Training",          c:"var(--green)"},
+  cooling:    {label:"Cooling down",      c:"var(--teal)"},
   between:    {label:"Starting next job", c:"var(--blue)"},
-  queue_empty:{label:"Queue finished",  c:"var(--indigo)"},
+  queue_empty:{label:"Queue finished",    c:"var(--indigo)"},
   stopped:    {label:"GPU queue stopped", c:"var(--red)"},
-  off:        {label:"Off shift",       c:"var(--gray)"},
+  off:        {label:"Off shift",         c:"var(--gray)"},
 };
+const STATUS = {
+  done:    {c:"var(--green)", i:ICON.check, t:"Done"},
+  running: {c:"var(--blue)",  i:ICON.play,  t:"Running"},
+  queued:  {c:"var(--gray)",  i:ICON.clock, t:"Queued"},
+  failed:  {c:"var(--red)",   i:ICON.x,     t:"Failed"},
+};
+const THERM = [{c:"var(--green)", t:"No throttling. The chip is running at full speed."},
+               {c:"var(--yellow)", t:"Warm. macOS may start trimming performance slightly."},
+               {c:"var(--orange)", t:"Throttling. macOS is reducing performance to cool down."},
+               {c:"var(--red)", t:"Critical. Heavy throttling."}];
 
 function ring(r, w, frac, color){
   const C = 2 * Math.PI * r, f = Math.max(0, Math.min(1, frac || 0));
@@ -182,39 +256,44 @@ function ring(r, w, frac, color){
     <circle r="${r}" cx="60" cy="60" fill="none" stroke="${color}" stroke-width="${w}" stroke-linecap="round"
       stroke-dasharray="${(C * f).toFixed(1)} ${C.toFixed(1)}" transform="rotate(-90 60 60)" style="transition:stroke-dasharray .8s ease"/>`;
 }
+const expRow = (e, right) => {
+  const S = STATUS[e.status] || STATUS.queued;
+  return `<details><summary class="row"><div class="ic" style="--c:${S.c}">${S.i}</div>
+    <div class="rt"><div class="t">${esc(e.title)}</div><div class="d">${esc(e.detail || "—")}</div></div>
+    <div class="rv">${right ?? ""}</div>${ICON.chev}</summary>
+    <div class="exp-why">${esc(e.why || "")}</div></details>`;
+};
 
-function render(s){
-  const stale = now() - s.updated > 25 * 60;
-  $("live").classList.toggle("stale", stale);
-  $("updated").textContent = `Updated ${ago(s.updated)}` + (stale ? " · Mac may be asleep or offline" : "");
-  $("today").textContent = new Date().toLocaleDateString([], {weekday:"long", day:"numeric", month:"long"});
-
-  // hero
+function renderNow(s){
   const st = STATES[s.state] || {label:s.state, c:"var(--gray)"};
+  const items = s.experiments?.items || [];
+  const cur = items.find(i => i.status === "running");
   let h = `<span class="pill" style="--c:${st.c}"><i></i>${esc(st.label)}</span>`;
   if (s.state === "cooling" && s.cooldown){
     const left = s.cooldown.until - now();
-    h += `<div class="job">Mac is resting</div><div class="jobd">Training resumes at ${hm(s.cooldown.until)} (${dur(left)} left)</div>
+    h += `<div class="job">Mac is resting</div><div class="jobd">Training resumes at ${hm(s.cooldown.until)} (${dur(left)} left). A 30-minute rest follows every 8 hours of training.</div>
       <div class="bar" style="--c:var(--teal)"><b style="width:${pct(s.cooldown.minutes*60 - left, s.cooldown.minutes*60)}%"></b></div>`;
   } else if (s.job){
     const j = s.job, t = j.steps_total;
     h += `<div class="job">${esc(j.title)}</div><div class="jobd">${esc(j.detail)}</div>`;
-    if (t) h += `<div class="bar" style="--c:var(--green)"><b style="width:${pct(j.steps_done, t)}%"></b></div>
-      <div class="meta"><span>${j.steps_done} of ${t} experiments saved</span><span>${s.job_started ? "running " + dur(now() - s.job_started) : ""}</span></div>`;
-    else h += `<div class="meta" style="margin-top:12px"><span>${s.job_started ? "running " + dur(now() - s.job_started) : ""}</span><span></span></div>`;
-    if (j.last_activity) h += `<div class="meta" style="margin-top:4px"><span>Last training output ${ago(j.last_activity)}</span></div>`;
+    if (t) {
+      const el = s.job_started ? now() - s.job_started : null;
+      h += `<div class="bar" style="--c:var(--green)"><b style="width:${pct(j.steps_done, t)}%"></b></div>
+      <div class="meta"><span>${j.steps_done} of ${t} parts saved (build + 10 deletions)</span><span>${el ? "running " + dur(el) : ""}</span></div>`;
+    } else h += `<div class="meta" style="margin-top:12px"><span>${s.job_started ? "running " + dur(now() - s.job_started) : ""}</span></div>`;
+    if (j.last_activity) h += `<div class="meta" style="margin-top:4px"><span>Last training output ${ago(j.last_activity)}</span><span>${cur?.est_min ? "typical run " + mins(cur.est_min) : ""}</span></div>`;
+    if (cur?.why) h += `<div class="why">${esc(cur.why)}</div>`;
   } else if (s.state === "off"){
-    h += `<div class="job">The Mac is yours</div><div class="jobd">GPU work is paused until the next night shift.</div>`;
+    h += `<div class="job">The Mac is free</div><div class="jobd">GPU work is paused until the next night shift.</div>`;
   } else if (s.state === "stopped"){
     h += `<div class="job">Nothing is training</div><div class="jobd">The queue runner is not running. Claude restarts it at the start of its next round.</div>`;
   } else {
     h += `<div class="job">${s.state === "queue_empty" ? "All queued experiments done" : "Between experiments"}</div>`;
   }
   if (s.cooldown && !s.cooldown.until && s.state !== "off")
-    h += `<div class="meta" style="margin-top:8px"><span>Rest requested: starts after this experiment</span></div>`;
+    h += `<div class="meta" style="margin-top:10px"><span>Rest requested: starts when this experiment's current part is saved</span></div>`;
   $("hero").innerHTML = h;
 
-  // rings
   const q = s.queue, sh = s.shift || {};
   const shiftFrac = sh.start && sh.end ? (now() - sh.start) / (sh.end - sh.start) : 0;
   const u5 = s.claude?.usage?.five_hour?.utilization;
@@ -226,7 +305,6 @@ function render(s){
       <div class="lg" style="--c:var(--ring3)"><div class="k"><i></i>Claude 5-hour use</div><div class="v">${u5 == null ? "<small>n/a</small>" : Math.round(100*u5) + "<small>%</small>"}</div></div>
     </div>`;
 
-  // usage
   const U = s.claude?.usage || {};
   const ub = (name, w) => {
     if (!w || w.utilization == null) return `<div class="usage"><div class="uh"><span class="n">${name}</span><span class="p">–</span></div></div>`;
@@ -235,62 +313,136 @@ function render(s){
       <div class="bar" style="--c:${c}"><b style="width:${p}%"></b></div>
       <div class="meta"><span>${100 - p}% left</span><span>${w.resetsAt ? "resets in " + dur(w.resetsAt - now()) + " · " + hm(w.resetsAt) : ""}</span></div></div>`;
   };
-  let us = ub("5-hour window", U.five_hour) + ub("Weekly limit", U.seven_day);
   const cl = s.claude || {};
-  us += `<div class="row plain" style="border-top:.5px solid var(--sep)"><div class="rt"><div class="t">Claude</div>
-    <div class="d">${cl.working ? "Working on round " + (cl.rounds || 1) : U.status === "limited" || U.status === "rejected" ? "Waiting for the usage limit to reset" : s.in_shift ? "Resting between rounds" : "Not running (off shift)"}</div></div>
-    <div class="rv">${U.probed_at ? "checked " + ago(U.probed_at) : ""}</div></div>`;
-  $("usage").innerHTML = us;
+  $("usage").innerHTML = ub("5-hour window", U.five_hour) + ub("Weekly limit", U.seven_day) +
+    `<div class="kv" style="border-top:.5px solid var(--sep)"><span>${cl.working ? "Claude is working (round " + (cl.rounds || 1) + ")" : U.status === "limited" || U.status === "rejected" ? "Claude is waiting for the limit to reset" : s.in_shift ? "Claude is resting between rounds" : "Claude is off (no shift)"}</span><span>${U.probed_at ? "checked " + ago(U.probed_at) : ""}</span></div>`;
 
-  // shift
   if (sh.end){
-    const cd = s.cooldown;
-    let em = "";
+    const cd = s.cooldown; let em = "";
     if (cd && cd.until && sh.start) { const a = pct(cd.until - cd.minutes*60 - sh.start, sh.end - sh.start), b = pct(cd.minutes*60, sh.end - sh.start); em = `<em style="left:${a}%;width:${b}%"></em>`; }
+    const goal = s.plan_info?.shift_goals?.[(sh.number || 1) - 1];
     $("shift").innerHTML = `<div class="uh"><span class="n" style="font-size:17px;font-weight:600">Shift ${sh.number ?? "–"} of 12</span>
         <span class="rv">${s.in_shift ? dur(sh.end - now()) + " left" : "ended " + hm(sh.end)}</span></div>
+      ${goal ? `<div class="jobd" style="margin-top:3px">Goal: ${esc(goal)}</div>` : ""}
       <div class="tl"><b style="width:${s.in_shift ? pct(now() - sh.start, sh.end - sh.start) : 100}%"></b>${em}</div>
       <div class="meta"><span>${sh.start ? hm(sh.start) : ""}</span><span>wrap-up ${esc(sh.wrap_from)}</span><span>${hm(sh.end)}</span></div>
-      <div class="meta" style="margin-top:10px"><span>${s.processes.cooldown_watcher ? "Cooling: 30 min rest after every 8 h" : "Cooldown watcher not running"}</span><span>${q.failed ? `<span style="color:var(--red)">${q.failed} failed</span>` : "0 failed"}</span></div>`;
+      <div class="meta" style="margin-top:10px"><span>${q.failed ? `<span style="color:var(--red)">${q.failed} failed</span>` : "No failed jobs"}</span><span>${s.results.count} result files</span></div>`;
   } else $("shift").innerHTML = `<div class="empty" style="padding:0">No shift has run yet.</div>`;
 
-  // mac tiles
-  const p = s.power || {};
-  const batC = p.source === "AC" ? "var(--green)" : (p.battery ?? 100) < 30 ? "var(--red)" : "var(--orange)";
-  const load = p.load != null && p.cores ? Math.round(100 * p.load / p.cores) : null;
-  $("mac").innerHTML = `<div class="tile"><div class="k">${p.source === "AC" ? "Plugged in" : "On battery"}</div>
-      <div class="v" style="color:${batC}">${p.battery ?? "–"}<small>%</small></div><div class="s">${esc(p.battery_state || "")}</div></div>
-    <div class="tile"><div class="k">CPU load</div><div class="v">${load ?? "–"}<small>%</small></div><div class="s">${p.load ?? "–"} of ${p.cores ?? "–"} cores</div></div>
-    <div class="tile"><div class="k">Results saved</div><div class="v">${s.results.count}</div><div class="s">${s.results.per_hour_24h.slice(-1)[0]} in the last hour</div></div>
-    <div class="tile"><div class="k">Paper freeze</div><div class="v">${dur(s.deadlines.freeze - now()).split(" ")[0]}</div><div class="s">${new Date(s.deadlines.freeze*1000).toLocaleDateString([], {day:"numeric", month:"short"})} · submit by ${new Date(s.deadlines.submit*1000).toLocaleDateString([], {day:"numeric", month:"short"})}</div></div>`;
-  if (p.source !== "AC" && s.in_shift) $("err").style.display = "block", $("err").innerHTML = "<b>The Mac is on battery.</b> Training will drain it before the shift ends; plug it in when you can.";
-  else $("err").style.display = "none";
-
-  // chart
-  const hrs = s.results.per_hour_24h, mx = Math.max(1, ...hrs);
-  $("chart").innerHTML = hrs.map(v => `<b class="${v ? "" : "z"}" style="height:${v ? Math.max(6, 100 * v / mx) : 3}%" title="${v}"></b>`).join("");
-
-  // recent / next
-  $("recent").innerHTML = q.recent.length ? q.recent.map(r => `<div class="row"><div class="ic" style="--c:${r.ok ? "var(--green)" : "var(--red)"}">${r.ok ? ICON.check : ICON.x}</div>
-      <div class="rt"><div class="t">${esc(r.title)}</div><div class="d">${esc(r.detail)}</div></div><div class="rv">${ago(r.at)}</div></div>`).join("")
-    : `<div class="empty">Nothing finished yet.</div>`;
+  const queued = items.filter(i => i.status === "queued");
   const nx = [];
-  if (s.job) nx.push(`<div class="row"><div class="ic" style="--c:var(--green)">${ICON.play}</div><div class="rt"><div class="t">${esc(s.job.title)}</div><div class="d">${esc(s.job.detail)}</div></div><div class="rv">now</div></div>`);
-  q.next.forEach(r => nx.push(`<div class="row"><div class="ic" style="--c:var(--gray)">${ICON.clock}</div><div class="rt"><div class="t">${esc(r.title)}</div><div class="d">${esc(r.detail)}</div></div></div>`));
-  const rest = q.total - q.done - (s.job ? 1 : 0) - q.next.length;
-  if (rest > 0) nx.push(`<div class="row plain"><div class="rt"><div class="d">+ ${rest} more queued</div></div></div>`);
+  if (cur) nx.push(expRow(cur, "now"));
+  queued.slice(0, 4).forEach(e => nx.push(expRow(e, e.est_min ? "~" + mins(e.est_min) : "")));
+  if (queued.length > 4) nx.push(`<div class="row" style="cursor:pointer" onclick="show('exp')"><div class="rt"><div class="t" style="color:var(--blue)">All ${queued.length} queued experiments</div></div>${ICON.chev}</div>`);
   $("next").innerHTML = nx.join("") || `<div class="empty">Queue is empty.</div>`;
 
-  // plan
-  const pl = s.plan;
-  let ph = `<div class="phase"><div class="uh"><span class="n">Shifts completed</span><span class="p">${pl.shifts_done} / ${pl.shifts_total}</span></div>
-    <div class="seg">${Array.from({length: pl.shifts_total}, (_, i) => `<i class="${i < pl.shifts_done ? "x" : (s.in_shift && i === pl.shifts_done) ? "h" : ""}"></i>`).join("")}</div></div>`;
-  pl.phases.forEach(f => {
-    ph += `<div class="phase"><div class="uh"><span class="n">${esc(f.label)}</span><span class="p">${f.done}${f.partial ? " + " + f.partial + " in progress" : ""} / ${f.total}</span></div>
-      <div class="bar" style="--c:var(--green);margin:8px 0 0;height:6px"><b style="width:${pct(f.done + f.partial/2, f.total)}%"></b></div></div>`;
-  });
-  $("plan").innerHTML = ph;
+  const done = items.filter(i => i.status === "done" || i.status === "failed");
+  const recentAt = {}; (q.recent || []).forEach(r => recentAt[r.title + "|" + r.detail] = r.at);
+  const rec = done.filter(e => recentAt[e.title + "|" + e.detail]).sort((a, b) => recentAt[b.title + "|" + b.detail] - recentAt[a.title + "|" + a.detail]).slice(0, 5);
+  $("recent").innerHTML = rec.length ? rec.map(e => expRow(e, ago(recentAt[e.title + "|" + e.detail]))).join("") : `<div class="empty">Nothing finished yet.</div>`;
 }
+
+function renderExp(s){
+  const E = s.experiments; if (!E) return;
+  const n = E.items.length, d = E.items.filter(i => i.status === "done").length;
+  const shiftsLeft = E.eta_min_total / 60 / 15;
+  $("exp-sum").innerHTML = `<svg width="124" height="124" viewBox="0 0 120 120">${ring(50, 13, d / n, "var(--ring1)")}${ring(34, 13, E.groups.filter(g => g.done === g.total).length / E.groups.length, "var(--green)")}</svg>
+    <div class="legend">
+      <div class="lg" style="--c:var(--ring1)"><div class="k"><i></i>Experiments done</div><div class="v">${d}<small> / ${n}</small></div></div>
+      <div class="lg" style="--c:var(--green)"><div class="k"><i></i>Groups complete</div><div class="v">${E.groups.filter(g => g.done === g.total).length}<small> / ${E.groups.length}</small></div></div>
+      <div class="lg" style="--c:var(--text)"><div class="k">GPU time left (estimate)</div><div class="v">${mins(Math.round(E.eta_min_total))}<small> · ~${shiftsLeft.toFixed(1)} shifts</small></div></div>
+    </div>`;
+  $("groups").innerHTML = E.groups.map(g => {
+    const its = E.items.filter(i => i.group === g.id);
+    const c = g.done === g.total ? "var(--green)" : its.some(i => i.status === "running") ? "var(--blue)" : "var(--gray)";
+    return `<div class="hdr">${esc(g.name)}</div><div class="card">
+      <div class="phase"><div class="uh"><span class="n" style="font-weight:500;font-size:15px">${esc(g.about)}</span><span class="p">${g.done} / ${g.total}</span></div>
+        <div class="bar" style="--c:${c};margin:8px 0 2px;height:6px"><b style="width:${pct(g.done, g.total)}%"></b></div>
+        <div class="meta" style="margin-top:6px"><span>${g.done === g.total ? "Complete" : "~" + mins(g.eta_min) + " GPU time left"}</span></div></div>
+      <div style="border-top:.5px solid var(--sep)">${its.map(e => expRow(e, e.status === "done" ? mins(e.minutes) : e.status === "running" ? "now" : e.status === "failed" ? "failed" : (e.est_min ? "~" + mins(e.est_min) : ""))).join("")}</div></div>`;
+  }).join("");
+}
+
+function renderPlan(s){
+  const P = s.plan_info, pr = s.project; if (!P) return;
+  $("about").innerHTML = `<b>${esc(pr.title)}</b> · ${esc(pr.paper)}<div style="margin-top:6px">${esc(pr.about)}</div>
+    <div class="jobd" style="margin-top:8px">${esc(pr.hardware)}</div>`;
+  let nextFound = false;
+  $("miles").innerHTML = P.milestones.map(m => {
+    const past = m.at < now(); const isNext = !past && !nextFound; if (isNext) nextFound = true;
+    const c = past ? "var(--green)" : isNext ? "var(--blue)" : "var(--gray)";
+    return `<div class="ms" style="--c:${c}"><div class="dot ${past ? "f" : ""}"></div><div class="rt"><div class="t">${esc(m.name)}</div>
+      <div class="d">${esc(m.about)}</div></div><div class="rv" style="font-size:14px">${dmy(m.at)}<br><span style="color:${c}">${past ? "passed" : "in " + dur(m.at - now())}</span></div></div>`;
+  }).join("");
+  const pl = s.plan;
+  $("phases").innerHTML = pl.phases.map(f => {
+    const info = P.phases[f.name] || {label: f.label, about: ""};
+    const done = f.done === f.total;
+    return `<div class="phase"><div class="uh"><span class="n">${esc(info.label)}</span><span class="p" style="color:${done ? "var(--green)" : "var(--text2)"}">${done ? "Done" : `${f.done}${f.partial ? " + " + f.partial + " started" : ""} of ${f.total}`}</span></div>
+      <div class="ab">${esc(info.about)}</div>
+      <div class="bar" style="--c:var(--green);margin:9px 0 0;height:6px"><b style="width:${pct(f.done + f.partial/2, f.total)}%"></b></div></div>`;
+  }).join("");
+  const cur = s.in_shift ? (s.shift?.number || 0) : 0;
+  const base = new Date(2026, 10, 24);
+  $("shifts").innerHTML = P.shift_goals.map((g, i) => {
+    const n = i + 1, d0 = new Date(base.getTime() + i * 864e5), d1 = new Date(d0.getTime() + 864e5);
+    const cls = n <= pl.shifts_done ? "x" : n === cur ? "now" : "";
+    const f = d => d.toLocaleDateString([], {day:"numeric", month:"short"});
+    return `<div class="sh"><div class="num ${cls}">${cls === "x" ? "✓" : n}</div><div class="rt"><div class="g">${esc(g)}</div>
+      <div class="dt">Night of ${f(d0)} → ${f(d1)} 16:00${n === cur ? " · <b style='color:var(--blue)'>now</b>" : ""}</div></div></div>`;
+  }).join("");
+}
+
+function renderMac(s){
+  const H = s.hardware || {}, p = s.power || {};
+  const T = THERM[H.thermal ?? 0] || THERM[0];
+  $("therm").innerHTML = `<span class="pill" style="--c:${T.c}"><i></i>Thermal state: ${esc(H.thermal_label || "unknown")}</span>
+    <div class="job">${H.throttling ? "Throttling" : "Running cool"}</div><div class="jobd">${esc(T.t)}</div>`;
+  const tile = (k, v, unit, sub, c) => `<div class="tile"><div class="k">${k}</div><div class="v" ${c ? `style="color:${c}"` : ""}>${v ?? "–"}<small>${unit}</small></div><div class="s">${sub}</div></div>`;
+  const gc = H.gpu_util >= 50 ? "var(--green)" : H.gpu_util >= 10 ? "var(--blue)" : "var(--text)";
+  const batC = p.source === "AC" ? "var(--green)" : (p.battery ?? 100) < 30 ? "var(--red)" : "var(--orange)";
+  $("hw").innerHTML = tile("GPU load", H.gpu_util, "%", "average of 5 readings", gc) +
+    tile("GPU memory", H.gpu_mem_gb, " GB", "in use by the GPU") +
+    tile("CPU load", H.cpu_util, "%", `${p.load ?? "–"} load on ${H.cores ?? "–"} cores`) +
+    tile("Memory free", H.mem_free_pct, "%", `of ${H.ram_gb ?? "–"} GB`) +
+    tile(p.source === "AC" ? "Plugged in" : "On battery", p.battery, "%", esc(p.battery_state || ""), batC) +
+    tile("Results saved", s.results.count, "", `${s.results.per_hour_24h.slice(-1)[0]} in the last hour`);
+  const hist = H.history || [];
+  if (hist.length){
+    const t0 = now() - 24 * 3600, bins = Array(48).fill(null);
+    hist.forEach(([t, g, c, th]) => { const b = Math.floor((t - t0) / 1800); if (b >= 0 && b < 48 && g != null) bins[b] = Math.max(bins[b] ?? 0, g); });
+    const thm = {}; hist.forEach(([t, g, c, th]) => { const b = Math.floor((t - t0) / 1800); if (th != null) thm[b] = Math.max(thm[b] ?? 0, th); });
+    $("gpuchart").innerHTML = bins.map((v, i) => `<b class="${v == null ? "z" : ""}" style="height:${v == null ? 3 : Math.max(4, v)}%;--c:${(thm[i] ?? 0) >= 2 ? "var(--orange)" : "var(--green)"}" title="${v ?? "no data"}%"></b>`).join("");
+    $("gpuaxis").innerHTML = `<span>24 h ago</span><span>${hist.length} readings · orange = throttling</span><span>now</span>`;
+  }
+  const hrs = s.results.per_hour_24h, mx = Math.max(1, ...hrs);
+  $("chart").innerHTML = hrs.map(v => `<b class="${v ? "" : "z"}" style="height:${v ? Math.max(6, 100 * v / mx) : 3}%" title="${v}"></b>`).join("");
+  $("machine").innerHTML = `<div class="kv"><span>Chip</span><span>${esc(H.chip || "–")}</span></div>
+    <div class="kv"><span>CPU cores</span><span>${H.cores ?? "–"}</span></div><div class="kv"><span>Memory</span><span>${H.ram_gb ?? "–"} GB unified</span></div>
+    <div class="kv"><span>Framework</span><span>PyTorch on Metal (MPS)</span></div>
+    <div class="kv"><span>Cooling rule</span><span>30 min rest after 8 h</span></div>`;
+}
+
+function render(s){
+  const stale = now() - s.updated > 25 * 60;
+  $("live").classList.toggle("stale", stale);
+  $("updated").textContent = `Updated ${ago(s.updated)}` + (stale ? " · Mac may be asleep or offline" : "");
+  $("today").textContent = new Date().toLocaleDateString([], {weekday:"long", day:"numeric", month:"long"});
+  const p = s.power || {};
+  if (p.source !== "AC" && s.in_shift){ $("err").style.display = "block"; $("err").innerHTML = "<b>The Mac is on battery.</b> Training will drain it before the shift ends."; }
+  else $("err").style.display = "none";
+  for (const f of [renderNow, renderExp, renderPlan, renderMac]) { try { f(s); } catch (e) { console.error(e); } }
+}
+
+const TITLES = {now: "Training", exp: "Experiments", plan: "Plan", mac: "Mac"};
+function show(v){
+  document.querySelectorAll(".view").forEach(x => x.classList.toggle("on", x.id === "v-" + v));
+  document.querySelectorAll("#tabs button").forEach(b => b.classList.toggle("on", b.dataset.v === v));
+  $("title").textContent = TITLES[v]; window.scrollTo(0, 0);
+  try { localStorage.setItem("tab", v); } catch (e) {}
+}
+$("tabs").addEventListener("click", e => { const b = e.target.closest("button"); if (b) show(b.dataset.v); });
+try { const t = localStorage.getItem("tab"); if (t && TITLES[t]) show(t); } catch (e) {}
 
 let last = null;
 async function load(){
