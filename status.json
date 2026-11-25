@@ -1,5 +1,5 @@
 {
- "updated": 1795572884.106339,
+ "updated": 1795572943.3394449,
  "state": "training",
  "shift": {
   "start": 1795543200.0,
@@ -106,12 +106,12 @@
    0,
    7,
    6,
-   7,
    9,
+   7,
    26,
    12,
-   10,
-   17
+   15,
+   12
   ]
  },
  "plan": {
@@ -160,7 +160,7 @@
   "source": "AC",
   "battery": 90,
   "battery_state": "AC attached",
-  "load": 1.6,
+  "load": 1.9,
   "cores": 15
  },
  "claude": {
