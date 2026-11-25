@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Training Progress</title>
+<meta name="description" content="Live status of the overnight training shift.">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Training">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#f2f2f7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" type="image/png" href="icon-192.png">
+<link rel="manifest" href="manifest.webmanifest">
+<style>
+:root{
+  --bg:#f2f2f7; --card:#ffffff; --text:#000000; --text2:rgba(60,60,67,.6); --text3:rgba(60,60,67,.3);
+  --sep:rgba(60,60,67,.18); --fill:rgba(120,120,128,.12);
+  --green:#34c759; --orange:#ff9500; --amber:#ff9f0a; --red:#ff3b30; --blue:#007aff; --teal:#30b0c7;
+  --violet:#af52de; --indigo:#5856d6; --gray:#8e8e93;
+  --ring1:#ff9f0a; --ring2:#bf5af2; --ring3:#32ade6;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#000000; --card:#1c1c1e; --text:#ffffff; --text2:rgba(235,235,245,.6); --text3:rgba(235,235,245,.3);
+    --sep:rgba(84,84,88,.6); --fill:rgba(120,120,128,.24);
+    --green:#30d158; --orange:#ff9f0a; --red:#ff453a; --blue:#0a84ff; --teal:#40c8e0; --violet:#bf5af2; --indigo:#5e5ce6;
+    --ring1:#ff9f0a; --ring2:#bf5af2; --ring3:#64d2ff;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#000000; --card:#1c1c1e; --text:#ffffff; --text2:rgba(235,235,245,.6); --text3:rgba(235,235,245,.3);
+  --sep:rgba(84,84,88,.6); --fill:rgba(120,120,128,.24);
+  --green:#30d158; --orange:#ff9f0a; --red:#ff453a; --blue:#0a84ff; --teal:#40c8e0; --violet:#bf5af2; --indigo:#5e5ce6;
+  --ring1:#ff9f0a; --ring2:#bf5af2; --ring3:#64d2ff;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);
+  font:17px/1.3 -apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",system-ui,sans-serif;
+  padding:calc(env(safe-area-inset-top) + 8px) max(16px,env(safe-area-inset-right)) calc(env(safe-area-inset-bottom) + 28px) max(16px,env(safe-area-inset-left));
+  -webkit-font-smoothing:antialiased;-webkit-user-select:none;user-select:none}
+.wrap{max-width:560px;margin:0 auto}
+.top{display:flex;justify-content:space-between;align-items:center;min-height:36px;color:var(--text2);font-size:15px}
+.top button{border:0;background:none;color:var(--blue);font:inherit;font-size:17px;padding:6px 0;cursor:pointer}
+h1{font-size:34px;line-height:41px;font-weight:700;letter-spacing:.37px;margin:2px 0 2px}
+.sub{color:var(--text2);font-size:15px;margin-bottom:18px;display:flex;align-items:center;gap:6px}
+.live{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 0 var(--green);animation:pulse 2s infinite}
+.live.stale{background:var(--orange);animation:none}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(52,199,89,.5)}70%{box-shadow:0 0 0 7px rgba(52,199,89,0)}100%{box-shadow:0 0 0 0 rgba(52,199,89,0)}}
+.hdr{font-size:13px;color:var(--text2);text-transform:uppercase;letter-spacing:-.08px;margin:22px 16px 7px}
+.card{background:var(--card);border-radius:12px;overflow:hidden}
+.pad{padding:16px}
+.hero{padding:18px 16px 16px}
+.pill{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;padding:4px 10px;border-radius:999px;
+  background:color-mix(in srgb,var(--c) 16%,transparent);color:var(--c)}
+.pill i{width:7px;height:7px;border-radius:50%;background:var(--c)}
+.job{font-size:22px;font-weight:700;letter-spacing:.35px;margin:12px 0 2px}
+.jobd{color:var(--text2);font-size:15px}
+.bar{height:8px;border-radius:4px;background:var(--fill);overflow:hidden;margin:14px 0 8px}
+.bar>b{display:block;height:100%;border-radius:4px;background:var(--c,var(--blue));transition:width .6s ease}
+.meta{display:flex;justify-content:space-between;color:var(--text2);font-size:13px;font-variant-numeric:tabular-nums}
+.rings{display:flex;align-items:center;gap:18px;padding:16px}
+.rings svg{flex:none}
+.legend{display:flex;flex-direction:column;gap:10px;min-width:0;flex:1}
+.lg .k{font-size:13px;color:var(--text2);display:flex;align-items:center;gap:6px}
+.lg .k i{width:9px;height:9px;border-radius:50%;background:var(--c)}
+.lg .v{font-size:20px;font-weight:600;font-variant-numeric:tabular-nums;color:var(--c);letter-spacing:.2px}
+.lg .v small{font-size:14px;color:var(--text2);font-weight:500}
+.row{display:flex;align-items:center;gap:12px;padding:11px 16px;position:relative;min-height:44px}
+.row+.row::before{content:"";position:absolute;top:0;left:56px;right:0;height:.5px;background:var(--sep)}
+.row.plain+.row.plain::before{left:16px}
+.ic{width:30px;height:30px;border-radius:7px;display:grid;place-items:center;background:var(--c);flex:none;color:#fff}
+.ic svg{width:18px;height:18px}
+.rt{flex:1;min-width:0}
+.rt .t{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rt .d{font-size:13px;color:var(--text2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rv{color:var(--text2);font-size:15px;font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+.usage{padding:14px 16px}
+.usage+.usage{border-top:.5px solid var(--sep)}
+.uh{display:flex;justify-content:space-between;align-items:baseline}
+.uh .n{font-size:15px}
+.uh .p{font-size:22px;font-weight:600;font-variant-numeric:tabular-nums}
+.usage .bar{margin:8px 0 6px}
+.chart{display:flex;align-items:flex-end;gap:3px;height:76px;padding:0 16px}
+.chart b{flex:1;background:var(--blue);border-radius:3px 3px 1px 1px;min-height:2px;opacity:.9}
+.chart b.z{background:var(--fill)}
+.axis{display:flex;justify-content:space-between;padding:6px 16px 14px;color:var(--text3);font-size:11px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.tile{background:var(--card);border-radius:12px;padding:14px 16px}
+.tile .k{font-size:13px;color:var(--text2)}
+.tile .v{font-size:28px;font-weight:700;letter-spacing:.3px;font-variant-numeric:tabular-nums;margin-top:2px}
+.tile .v small{font-size:15px;font-weight:500;color:var(--text2)}
+.tile .s{font-size:13px;color:var(--text2);margin-top:2px}
+.tl{position:relative;height:8px;border-radius:4px;background:var(--fill);margin:12px 0 6px;overflow:hidden}
+.tl b{position:absolute;top:0;bottom:0;left:0;background:var(--violet);border-radius:4px}
+.tl em{position:absolute;top:0;bottom:0;background:var(--orange);opacity:.9}
+.phase{padding:12px 16px}
+.phase+.phase{border-top:.5px solid var(--sep)}
+.phase .uh .n{font-size:15px}
+.phase .uh .p{font-size:15px;font-weight:500;color:var(--text2)}
+.seg{display:flex;gap:3px;margin-top:8px}
+.seg i{flex:1;height:6px;border-radius:3px;background:var(--fill)}
+.seg i.x{background:var(--green)}
+.seg i.h{background:color-mix(in srgb,var(--green) 45%,transparent)}
+.empty{color:var(--text2);font-size:15px;padding:14px 16px}
+.foot{color:var(--text3);font-size:12px;text-align:center;margin-top:24px;line-height:1.5}
+.err{background:color-mix(in srgb,var(--orange) 14%,var(--card));color:var(--text);border-radius:12px;padding:12px 16px;font-size:15px;margin-bottom:12px;display:none}
+@media (max-width:360px){.rings{gap:12px}.lg .v{font-size:18px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top"><span id="today"></span><button id="refresh" aria-label="Refresh">Refresh</button></div>
+  <h1>Training</h1>
+  <div class="sub"><span class="live" id="live"></span><span id="updated">Loading…</span></div>
+  <div class="err" id="err"></div>
+
+  <div class="card hero" id="hero"></div>
+
+  <div class="hdr">Overview</div>
+  <div class="card rings" id="rings"></div>
+
+  <div class="hdr">Claude usage</div>
+  <div class="card" id="usage"></div>
+
+  <div class="hdr">This shift</div>
+  <div class="card pad" id="shift"></div>
+
+  <div class="hdr">Mac</div>
+  <div class="grid2" id="mac"></div>
+
+  <div class="hdr">Results saved · last 24 hours</div>
+  <div class="card" style="padding-top:16px"><div class="chart" id="chart"></div><div class="axis"><span>24 h ago</span><span>12 h</span><span>now</span></div></div>
+
+  <div class="hdr">Recently finished</div>
+  <div class="card" id="recent"></div>
+
+  <div class="hdr">Up next</div>
+  <div class="card" id="next"></div>
+
+  <div class="hdr">Paper plan</div>
+  <div class="card" id="plan"></div>
+
+  <div class="foot" id="foot">Updates every 10 minutes while the Mac is awake.</div>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const now = () => Date.now() / 1000;
+const hm = t => new Date(t * 1000).toLocaleTimeString([], {hour: "2-digit", minute: "2-digit"});
+function dur(s){ s = Math.max(0, Math.round(s)); const d = Math.floor(s/86400), h = Math.floor(s%86400/3600), m = Math.floor(s%3600/60);
+  if (d) return `${d}d ${h}h`; if (h) return `${h}h ${m}m`; return `${m}m`; }
+function ago(t){ const s = now() - t; if (s < 60) return "just now"; return dur(s) + " ago"; }
+const pct = (a, b) => b ? Math.max(0, Math.min(100, 100 * a / b)) : 0;
+
+const ICON = {
+  play:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l11-6.5z"/></svg>',
+  check:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>',
+  x:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M7 7l10 10M17 7L7 17"/></svg>',
+  clock:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>',
+  bolt:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 2L4.5 13.5H11L10 22l8.5-11.5H12z"/></svg>',
+  spark:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.2 6.6L21 11l-6.8 2.4L12 20l-2.2-6.6L3 11l6.8-2.4z"/></svg>',
+  moon:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 14.5A8 8 0 019.5 4a8 8 0 1010.5 10.5z"/></svg>',
+  snow:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 3v18M4.2 7.5l15.6 9M4.2 16.5l15.6-9"/></svg>',
+};
+const STATES = {
+  training:   {label:"Training",        c:"var(--green)"},
+  cooling:    {label:"Cooling down",    c:"var(--teal)"},
+  between:    {label:"Starting next job", c:"var(--blue)"},
+  queue_empty:{label:"Queue finished",  c:"var(--indigo)"},
+  stopped:    {label:"GPU queue stopped", c:"var(--red)"},
+  off:        {label:"Off shift",       c:"var(--gray)"},
+};
+
+function ring(r, w, frac, color){
+  const C = 2 * Math.PI * r, f = Math.max(0, Math.min(1, frac || 0));
+  return `<circle r="${r}" cx="60" cy="60" fill="none" stroke="${color}" stroke-opacity=".2" stroke-width="${w}"/>
+    <circle r="${r}" cx="60" cy="60" fill="none" stroke="${color}" stroke-width="${w}" stroke-linecap="round"
+      stroke-dasharray="${(C * f).toFixed(1)} ${C.toFixed(1)}" transform="rotate(-90 60 60)" style="transition:stroke-dasharray .8s ease"/>`;
+}
+
+function render(s){
+  const stale = now() - s.updated > 25 * 60;
+  $("live").classList.toggle("stale", stale);
+  $("updated").textContent = `Updated ${ago(s.updated)}` + (stale ? " · Mac may be asleep or offline" : "");
+  $("today").textContent = new Date().toLocaleDateString([], {weekday:"long", day:"numeric", month:"long"});
+
+  // hero
+  const st = STATES[s.state] || {label:s.state, c:"var(--gray)"};
+  let h = `<span class="pill" style="--c:${st.c}"><i></i>${esc(st.label)}</span>`;
+  if (s.state === "cooling" && s.cooldown){
+    const left = s.cooldown.until - now();
+    h += `<div class="job">Mac is resting</div><div class="jobd">Training resumes at ${hm(s.cooldown.until)} (${dur(left)} left)</div>
+      <div class="bar" style="--c:var(--teal)"><b style="width:${pct(s.cooldown.minutes*60 - left, s.cooldown.minutes*60)}%"></b></div>`;
+  } else if (s.job){
+    const j = s.job, t = j.steps_total;
+    h += `<div class="job">${esc(j.title)}</div><div class="jobd">${esc(j.detail)}</div>`;
+    if (t) h += `<div class="bar" style="--c:var(--green)"><b style="width:${pct(j.steps_done, t)}%"></b></div>
+      <div class="meta"><span>${j.steps_done} of ${t} experiments saved</span><span>${s.job_started ? "running " + dur(now() - s.job_started) : ""}</span></div>`;
+    else h += `<div class="meta" style="margin-top:12px"><span>${s.job_started ? "running " + dur(now() - s.job_started) : ""}</span><span></span></div>`;
+    if (j.last_activity) h += `<div class="meta" style="margin-top:4px"><span>Last training output ${ago(j.last_activity)}</span></div>`;
+  } else if (s.state === "off"){
+    h += `<div class="job">The Mac is yours</div><div class="jobd">GPU work is paused until the next night shift.</div>`;
+  } else if (s.state === "stopped"){
+    h += `<div class="job">Nothing is training</div><div class="jobd">The queue runner is not running. Claude restarts it at the start of its next round.</div>`;
+  } else {
+    h += `<div class="job">${s.state === "queue_empty" ? "All queued experiments done" : "Between experiments"}</div>`;
+  }
+  if (s.cooldown && !s.cooldown.until && s.state !== "off")
+    h += `<div class="meta" style="margin-top:8px"><span>Rest requested: starts after this experiment</span></div>`;
+  $("hero").innerHTML = h;
+
+  // rings
+  const q = s.queue, sh = s.shift || {};
+  const shiftFrac = sh.start && sh.end ? (now() - sh.start) / (sh.end - sh.start) : 0;
+  const u5 = s.claude?.usage?.five_hour?.utilization;
+  $("rings").innerHTML = `<svg width="124" height="124" viewBox="0 0 120 120" role="img" aria-label="Progress rings">
+      ${ring(50, 13, q.done / q.total, "var(--ring1)")}${ring(34, 13, s.in_shift ? shiftFrac : 0, "var(--ring2)")}${ring(18, 13, u5 ?? 0, "var(--ring3)")}</svg>
+    <div class="legend">
+      <div class="lg" style="--c:var(--ring1)"><div class="k"><i></i>Experiments done</div><div class="v">${q.done}<small> / ${q.total}</small></div></div>
+      <div class="lg" style="--c:var(--ring2)"><div class="k"><i></i>Shift elapsed</div><div class="v">${s.in_shift ? Math.round(100*shiftFrac) + "<small>%</small>" : "<small>off</small>"}</div></div>
+      <div class="lg" style="--c:var(--ring3)"><div class="k"><i></i>Claude 5-hour use</div><div class="v">${u5 == null ? "<small>n/a</small>" : Math.round(100*u5) + "<small>%</small>"}</div></div>
+    </div>`;
+
+  // usage
+  const U = s.claude?.usage || {};
+  const ub = (name, w) => {
+    if (!w || w.utilization == null) return `<div class="usage"><div class="uh"><span class="n">${name}</span><span class="p">–</span></div></div>`;
+    const p = Math.round(100 * w.utilization), c = p >= 90 ? "var(--red)" : p >= 70 ? "var(--orange)" : "var(--green)";
+    return `<div class="usage"><div class="uh"><span class="n">${name}</span><span class="p" style="color:${c}">${p}%</span></div>
+      <div class="bar" style="--c:${c}"><b style="width:${p}%"></b></div>
+      <div class="meta"><span>${100 - p}% left</span><span>${w.resetsAt ? "resets in " + dur(w.resetsAt - now()) + " · " + hm(w.resetsAt) : ""}</span></div></div>`;
+  };
+  let us = ub("5-hour window", U.five_hour) + ub("Weekly limit", U.seven_day);
+  const cl = s.claude || {};
+  us += `<div class="row plain" style="border-top:.5px solid var(--sep)"><div class="rt"><div class="t">Claude</div>
+    <div class="d">${cl.working ? "Working on round " + (cl.rounds || 1) : U.status === "limited" || U.status === "rejected" ? "Waiting for the usage limit to reset" : s.in_shift ? "Resting between rounds" : "Not running (off shift)"}</div></div>
+    <div class="rv">${U.probed_at ? "checked " + ago(U.probed_at) : ""}</div></div>`;
+  $("usage").innerHTML = us;
+
+  // shift
+  if (sh.end){
+    const cd = s.cooldown;
+    let em = "";
+    if (cd && cd.until && sh.start) { const a = pct(cd.until - cd.minutes*60 - sh.start, sh.end - sh.start), b = pct(cd.minutes*60, sh.end - sh.start); em = `<em style="left:${a}%;width:${b}%"></em>`; }
+    $("shift").innerHTML = `<div class="uh"><span class="n" style="font-size:17px;font-weight:600">Shift ${sh.number ?? "–"} of 12</span>
+        <span class="rv">${s.in_shift ? dur(sh.end - now()) + " left" : "ended " + hm(sh.end)}</span></div>
+      <div class="tl"><b style="width:${s.in_shift ? pct(now() - sh.start, sh.end - sh.start) : 100}%"></b>${em}</div>
+      <div class="meta"><span>${sh.start ? hm(sh.start) : ""}</span><span>wrap-up ${esc(sh.wrap_from)}</span><span>${hm(sh.end)}</span></div>
+      <div class="meta" style="margin-top:10px"><span>${s.processes.cooldown_watcher ? "Cooling: 30 min rest after every 8 h" : "Cooldown watcher not running"}</span><span>${q.failed ? `<span style="color:var(--red)">${q.failed} failed</span>` : "0 failed"}</span></div>`;
+  } else $("shift").innerHTML = `<div class="empty" style="padding:0">No shift has run yet.</div>`;
+
+  // mac tiles
+  const p = s.power || {};
+  const batC = p.source === "AC" ? "var(--green)" : (p.battery ?? 100) < 30 ? "var(--red)" : "var(--orange)";
+  const load = p.load != null && p.cores ? Math.round(100 * p.load / p.cores) : null;
+  $("mac").innerHTML = `<div class="tile"><div class="k">${p.source === "AC" ? "Plugged in" : "On battery"}</div>
+      <div class="v" style="color:${batC}">${p.battery ?? "–"}<small>%</small></div><div class="s">${esc(p.battery_state || "")}</div></div>
+    <div class="tile"><div class="k">CPU load</div><div class="v">${load ?? "–"}<small>%</small></div><div class="s">${p.load ?? "–"} of ${p.cores ?? "–"} cores</div></div>
+    <div class="tile"><div class="k">Results saved</div><div class="v">${s.results.count}</div><div class="s">${s.results.per_hour_24h.slice(-1)[0]} in the last hour</div></div>
+    <div class="tile"><div class="k">Paper freeze</div><div class="v">${dur(s.deadlines.freeze - now()).split(" ")[0]}</div><div class="s">${new Date(s.deadlines.freeze*1000).toLocaleDateString([], {day:"numeric", month:"short"})} · submit by ${new Date(s.deadlines.submit*1000).toLocaleDateString([], {day:"numeric", month:"short"})}</div></div>`;
+  if (p.source !== "AC" && s.in_shift) $("err").style.display = "block", $("err").innerHTML = "<b>The Mac is on battery.</b> Training will drain it before the shift ends; plug it in when you can.";
+  else $("err").style.display = "none";
+
+  // chart
+  const hrs = s.results.per_hour_24h, mx = Math.max(1, ...hrs);
+  $("chart").innerHTML = hrs.map(v => `<b class="${v ? "" : "z"}" style="height:${v ? Math.max(6, 100 * v / mx) : 3}%" title="${v}"></b>`).join("");
+
+  // recent / next
+  $("recent").innerHTML = q.recent.length ? q.recent.map(r => `<div class="row"><div class="ic" style="--c:${r.ok ? "var(--green)" : "var(--red)"}">${r.ok ? ICON.check : ICON.x}</div>
+      <div class="rt"><div class="t">${esc(r.title)}</div><div class="d">${esc(r.detail)}</div></div><div class="rv">${ago(r.at)}</div></div>`).join("")
+    : `<div class="empty">Nothing finished yet.</div>`;
+  const nx = [];
+  if (s.job) nx.push(`<div class="row"><div class="ic" style="--c:var(--green)">${ICON.play}</div><div class="rt"><div class="t">${esc(s.job.title)}</div><div class="d">${esc(s.job.detail)}</div></div><div class="rv">now</div></div>`);
+  q.next.forEach(r => nx.push(`<div class="row"><div class="ic" style="--c:var(--gray)">${ICON.clock}</div><div class="rt"><div class="t">${esc(r.title)}</div><div class="d">${esc(r.detail)}</div></div></div>`));
+  const rest = q.total - q.done - (s.job ? 1 : 0) - q.next.length;
+  if (rest > 0) nx.push(`<div class="row plain"><div class="rt"><div class="d">+ ${rest} more queued</div></div></div>`);
+  $("next").innerHTML = nx.join("") || `<div class="empty">Queue is empty.</div>`;
+
+  // plan
+  const pl = s.plan;
+  let ph = `<div class="phase"><div class="uh"><span class="n">Shifts completed</span><span class="p">${pl.shifts_done} / ${pl.shifts_total}</span></div>
+    <div class="seg">${Array.from({length: pl.shifts_total}, (_, i) => `<i class="${i < pl.shifts_done ? "x" : (s.in_shift && i === pl.shifts_done) ? "h" : ""}"></i>`).join("")}</div></div>`;
+  pl.phases.forEach(f => {
+    ph += `<div class="phase"><div class="uh"><span class="n">${esc(f.label)}</span><span class="p">${f.done}${f.partial ? " + " + f.partial + " in progress" : ""} / ${f.total}</span></div>
+      <div class="bar" style="--c:var(--green);margin:8px 0 0;height:6px"><b style="width:${pct(f.done + f.partial/2, f.total)}%"></b></div></div>`;
+  });
+  $("plan").innerHTML = ph;
+}
+
+let last = null;
+async function load(){
+  try {
+    const r = await fetch("status.json?t=" + Date.now(), {cache: "no-store"});
+    if (!r.ok) throw new Error(r.status);
+    last = await r.json(); render(last);
+  } catch (e) {
+    if (last) render(last);
+    $("updated").textContent = "Could not load status (offline?)";
+  }
+}
+$("refresh").addEventListener("click", load);
+document.addEventListener("visibilitychange", () => { if (!document.hidden) load(); });
+load(); setInterval(load, 60000); setInterval(() => last && render(last), 15000);
+</script>
+</body>
+</html>
