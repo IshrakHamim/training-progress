@@ -565,14 +565,18 @@ function renderCycle(s){
 // ---------- pairing (secret stays on this phone; the public page never contains it) ----------
 let pair = null;
 try { pair = JSON.parse(localStorage.getItem("pair") || "null"); } catch (e) {}
-(function(){
-  const m = location.hash.match(/pair=([A-Za-z0-9_-]+)/); if (!m) return;
+// Home-screen apps on iOS have their own storage, separate from Safari, so pairing
+// in Safari does not carry over. applyPair() also backs the in-app "Paste pairing link" button.
+function applyPair(text, delay = 0){
+  const m = String(text || "").match(/pair=([A-Za-z0-9_-]+)/);
+  if (!m){ setTimeout(() => toast("That is not a pairing link"), delay); return false; }
   try {
     const b = m[1].replace(/-/g, "+").replace(/_/g, "/"), j = JSON.parse(atob(b + "===".slice((b.length + 3) % 4)));
-    if (j.k && j.n && j.c){ pair = j; try { localStorage.setItem("pair", JSON.stringify(j)); } catch (e) {} setTimeout(() => toast("✅ This phone is paired with the Mac"), 600); }
-  } catch (e) { setTimeout(() => toast("Pairing link not valid"), 600); }
-  history.replaceState(null, "", location.pathname + location.search);
-})();
+    if (j.k && j.n && j.c){ pair = j; try { localStorage.setItem("pair", JSON.stringify(j)); } catch (e) {} setTimeout(() => toast("✅ This phone is paired with the Mac"), delay); return true; }
+  } catch (e) {}
+  setTimeout(() => toast("Pairing link not valid"), delay); return false;
+}
+if (/pair=/.test(location.hash)){ applyPair(location.hash, 600); history.replaceState(null, "", location.pathname + location.search); }
 const hex = b => [...new Uint8Array(b)].map(x => x.toString(16).padStart(2, "0")).join("");
 async function sendStop(){
   const ts = Math.floor(Date.now() / 1000), nonce = hex(crypto.getRandomValues(new Uint8Array(12)));
@@ -595,7 +599,9 @@ function renderControls(s){
       <div style="margin-top:8px"><code>${esc(pair.n)}</code></div>
       <div class="btns"><button class="btn" data-act="copy">Copy topic</button><a class="btn" href="${esc((pair.s || "https://ntfy.sh") + "/" + pair.n)}" target="_blank" rel="noopener">Open in ntfy</a></div></div>`;
   } else {
-    h += `<div class="ctl"><div class="t">🔗 Pair this phone</div><div class="d">Pairing unlocks push notifications and the emergency stop. On the Mac run <code>python3 scripts/phone_bridge.py --pair</code> and open the link on this phone once. The key stays on this phone and never goes into the public page.</div></div>`;
+    h += `<div class="ctl"><div class="t">🔗 Pair this phone</div><div class="d">Pairing unlocks push notifications and the emergency stop. On the Mac run <code>python3 scripts/phone_bridge.py --pair</code> and open the link on this phone once. The key stays on this phone and never goes into the public page.</div>
+      <div class="d" style="margin-top:6px">Using this from the Home Screen? It keeps its own storage, separate from Safari, so pair it here: copy the pairing link, then tap the button.</div>
+      <div class="btns"><button class="btn" data-act="pastepair">Paste pairing link</button></div></div>`;
   }
   h += `<div class="ctl"><div class="t">🛑 Emergency stop</div>
     <div class="d">Ends the shift now. The running experiment saves a checkpoint at its next epoch (seconds), and the queue and Claude stop. The next <code>run_loop.sh</code> continues where it stopped.</div>
@@ -623,6 +629,11 @@ $("controls").addEventListener("pointerdown", e => {
 ["pointerup", "pointerleave", "pointercancel"].forEach(ev => $("controls").addEventListener(ev, cancelHold));
 $("controls").addEventListener("click", async e => {
   const a = e.target.closest("[data-act]")?.dataset.act;
+  if (a === "pastepair"){
+    let t = ""; try { t = await navigator.clipboard.readText(); } catch (err) {}
+    if (!/pair=/.test(t)) t = prompt("Paste the pairing link from the Mac:") || "";
+    if (t && applyPair(t)){ ctlHtml = ""; last && renderControls(last); }
+  }
   if (a === "copy"){ try { await navigator.clipboard.writeText(pair.n); toast("Topic copied"); } catch (err) { toast(pair.n); } }
   if (a === "unpair" && confirm("Unpair this phone? You can pair again with the link from the Mac.")){
     pair = null; try { localStorage.removeItem("pair"); } catch (err) {} ctlHtml = ""; last && renderControls(last); }
